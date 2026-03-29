@@ -93,8 +93,16 @@ module "artifact_registry" {
 }
 
 # ─────────────────────────────────────────────────────────────
-# Per-App Modules (defined in apps/*.tf)
+# Per-App Modules (defined in apps/)
 # ─────────────────────────────────────────────────────────────
-# See terraform/apps/ for per-app configurations.
-# Each app file calls modules for: app-identity, hosting,
-# firestore-databases, cloud-run, bigquery as needed.
+module "apps" {
+  source = "./apps"
+
+  project_id    = var.project_id
+  region        = var.region
+  github_org    = var.github_org
+  wif_pool_id   = module.wif_pool.pool_id
+  wif_pool_name = module.wif_pool.pool_name
+
+  depends_on = [module.project_setup]
+}
