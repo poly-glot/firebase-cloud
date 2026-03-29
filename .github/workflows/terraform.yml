@@ -50,7 +50,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         working-directory: ${{ env.TF_DIR }}
-        run: terraform plan -no-color -out=tfplan
+        run: terraform plan -no-color -input=false -out=tfplan
         continue-on-error: true
 
       - name: Comment Plan on PR
@@ -124,7 +124,7 @@ jobs:
 
       - name: Terraform Apply
         working-directory: ${{ env.TF_DIR }}
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve -input=false tfplan
 
       - name: Output Values
         working-directory: ${{ env.TF_DIR }}

@@ -3,7 +3,6 @@ terraform/.terraform/
 terraform/.terraform.lock.hcl
 terraform/*.tfstate
 terraform/*.tfstate.*
-terraform/terraform.tfvars
 terraform/*.auto.tfvars
 terraform/tfplan
 terraform/crash.log
