@@ -9,7 +9,7 @@ module "hooklab_identity" {
   project_id    = var.project_id
   app_name      = "hooklab"
   github_org    = var.github_org
-  github_repo   = "webhook"
+  github_repo   = "hooklab"
   wif_pool_id   = var.wif_pool_id
   wif_pool_name = var.wif_pool_name
 
