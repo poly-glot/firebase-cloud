@@ -42,7 +42,14 @@ module "hooklab_cloud_run" {
   service_name          = "hooklab-api"
   service_account_email = module.hooklab_identity.runtime_sa_email
 
-  env_vars = {}
+  env_vars = {
+    GCP_PROJECT      = var.project_id
+    ALLOWED_ORIGINS  = "https://hooklab.web.app,https://hooklab.junaid.guru"
+    BQ_DATASET       = "hooklab"
+    BQ_TABLE         = "executions"
+    GEMINI_MODEL     = "gemini-2.0-flash"
+    VERTEX_AI_LOCATION = var.region
+  }
 
   depends_on = [module.hooklab_identity]
 }
