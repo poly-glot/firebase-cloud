@@ -1,0 +1,8 @@
+# ─────────────────────────────────────────────────────────────
+# Copy to terraform.tfvars and fill in YOUR values
+# ─────────────────────────────────────────────────────────────
+
+project_id = "your-gcp-project-id"   # e.g. "my-firebase-cloud"
+region     = "us-central1"
+github_org = "your-github-username"  # e.g. "junaidahmed"
+ar_repo    = "firebase-cloud"        # shared Artifact Registry repo ID

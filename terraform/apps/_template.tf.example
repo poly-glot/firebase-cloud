@@ -1,0 +1,57 @@
+# ─────────────────────────────────────────────────────────────
+# Template: Onboarding a New App
+# ─────────────────────────────────────────────────────────────
+# 1. Copy this file to apps/<app-name>.tf
+# 2. Replace all "myapp" references with your app name
+# 3. Run: terraform plan → terraform apply
+# 4. Copy the outputs into the app repo's GitHub secrets
+# ─────────────────────────────────────────────────────────────
+
+# module "myapp_identity" {
+#   source = "../modules/app-identity"
+#
+#   project_id    = var.project_id
+#   app_name      = "myapp"
+#   github_org    = var.github_org
+#   github_repo   = "my-app-repo"
+#   wif_pool_id   = module.wif_pool.pool_id
+#   wif_pool_name = module.wif_pool.pool_name
+# }
+#
+# module "myapp_firestore" {
+#   source = "../modules/firestore-databases"
+#
+#   project_id    = var.project_id
+#   region        = var.region
+#   database_name = "myapp"
+#
+#   depends_on = [module.project_setup]
+# }
+#
+# module "myapp_hosting" {
+#   source = "../modules/hosting"
+#
+#   project_id = var.project_id
+#   site_id    = "myapp-site"
+#
+#   depends_on = [module.project_setup]
+# }
+#
+# module "myapp_cloud_run" {
+#   source = "../modules/cloud-run"
+#
+#   project_id            = var.project_id
+#   region                = var.region
+#   service_name          = "myapp-api"
+#   service_account_email = module.myapp_identity.runtime_sa_email
+#
+#   depends_on = [module.project_setup, module.myapp_identity]
+# }
+#
+# output "myapp_wif_provider" {
+#   value = module.myapp_identity.wif_provider
+# }
+#
+# output "myapp_gcp_sa_email" {
+#   value = module.myapp_identity.ci_cd_sa_email
+# }
