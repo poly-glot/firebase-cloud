@@ -12,6 +12,17 @@ module "hooklab_identity" {
   github_repo   = "webhook"
   wif_pool_id   = var.wif_pool_id
   wif_pool_name = var.wif_pool_name
+
+  runtime_roles = [
+    "roles/datastore.user",
+    "roles/secretmanager.secretAccessor",
+    "roles/logging.logWriter",
+    "roles/monitoring.metricWriter",
+    "roles/cloudtrace.agent",
+    "roles/aiplatform.user",
+    "roles/bigquery.jobUser",
+    "roles/bigquery.dataViewer",
+  ]
 }
 
 # ── Firestore: Named Database ──────────────────────────────
