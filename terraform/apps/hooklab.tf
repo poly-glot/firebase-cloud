@@ -29,7 +29,7 @@ module "hooklab_hosting" {
   source = "../modules/hosting"
 
   project_id = var.project_id
-  site_id    = var.project_id # or a custom site ID
+  site_id    = "hooklab"
 
 }
 
@@ -42,9 +42,7 @@ module "hooklab_cloud_run" {
   service_name          = "hooklab-api"
   service_account_email = module.hooklab_identity.runtime_sa_email
 
-  env_vars = {
-    PORT = "8080"
-  }
+  env_vars = {}
 
   depends_on = [module.hooklab_identity]
 }
