@@ -13,6 +13,10 @@ permissions:
   id-token: write    # Required for WIF
   pull-requests: write # Required for PR comments
 
+concurrency:
+  group: terraform
+  cancel-in-progress: false
+
 env:
   TF_DIR: terraform
   TF_VERSION: '1.9'
