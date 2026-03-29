@@ -22,7 +22,29 @@ output "artifact_registry_url" {
 }
 
 # ─────────────────────────────────────────────────────────────
-# Per-App Outputs (populated by apps/*.tf)
+# Per-App Outputs (from apps module)
 # ─────────────────────────────────────────────────────────────
-# Each app's outputs (WIF_PROVIDER, GCP_SA_EMAIL, etc.)
-# are defined in their respective apps/*.tf files.
+output "hooklab_wif_provider" {
+  description = "WIF_PROVIDER for webhook repo GitHub secrets"
+  value       = module.apps.hooklab_wif_provider
+}
+
+output "hooklab_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for webhook repo GitHub secrets"
+  value       = module.apps.hooklab_gcp_sa_email
+}
+
+output "hooklab_cloud_run_url" {
+  description = "Cloud Run service URL"
+  value       = module.apps.hooklab_cloud_run_url
+}
+
+output "hooklab_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.apps.hooklab_hosting_url
+}
+
+output "hooklab_firestore_db" {
+  description = "Firestore database name"
+  value       = module.apps.hooklab_firestore_db
+}
