@@ -27,6 +27,7 @@ resource "google_project_service" "apis" {
     "bigquery.googleapis.com",
     "bigquerydatatransfer.googleapis.com",
     "aiplatform.googleapis.com",
+    "cloudscheduler.googleapis.com",
   ])
 
   project            = var.project_id

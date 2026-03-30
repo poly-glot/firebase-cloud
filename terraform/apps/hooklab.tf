@@ -55,6 +55,7 @@ module "hooklab_cloud_run" {
 
   env_vars = {
     GCP_PROJECT      = var.project_id
+    FIRESTORE_DB     = "hooklab"
     ALLOWED_ORIGINS  = "https://hooklab.web.app,https://hooklab.junaid.guru"
     BQ_DATASET       = "hooklab"
     BQ_TABLE         = "executions"
@@ -63,6 +64,30 @@ module "hooklab_cloud_run" {
   }
 
   depends_on = [module.hooklab_identity]
+}
+
+# ── Cloud Scheduler ─────────────────────────────────────────
+module "hooklab_scheduler" {
+  source = "../modules/cloud-scheduler"
+
+  project_id            = var.project_id
+  region                = var.region
+  service_account_email = module.hooklab_identity.runtime_sa_email
+
+  jobs = {
+    hooklab-cleanup = {
+      schedule    = "0 3 * * *"
+      uri         = "${module.hooklab_cloud_run.service_url}/api/internal/cleanup"
+      description = "Daily cleanup of old executions and quota reset"
+    }
+    hooklab-aggregate = {
+      schedule    = "0 * * * *"
+      uri         = "${module.hooklab_cloud_run.service_url}/api/internal/aggregate"
+      description = "Hourly analytics aggregation"
+    }
+  }
+
+  depends_on = [module.hooklab_cloud_run]
 }
 
 # ── BigQuery ────────────────────────────────────────────────
