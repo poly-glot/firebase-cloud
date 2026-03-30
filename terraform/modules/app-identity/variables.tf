@@ -39,6 +39,7 @@ variable "ci_cd_roles" {
     "roles/cloudbuild.builds.builder",
     "roles/firebasehosting.admin",
     "roles/secretmanager.secretAccessor",
+    "roles/serviceusage.serviceUsageConsumer",
   ]
 }
 

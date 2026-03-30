@@ -59,8 +59,8 @@ module "hooklab_cloud_run" {
     ALLOWED_ORIGINS  = "https://hooklab.web.app,https://hooklab.junaid.guru"
     BQ_DATASET       = "hooklab"
     BQ_TABLE         = "executions"
-    GEMINI_MODEL     = "gemini-2.0-flash"
-    VERTEX_AI_LOCATION = var.region
+    GEMINI_MODEL     = "gemini-2.5-flash"
+    VERTEX_AI_LOCATION = "europe-west1"
   }
 
   depends_on = [module.hooklab_identity]
