@@ -55,6 +55,7 @@ module "hooklab_cloud_run" {
 
   env_vars = {
     GCP_PROJECT      = var.project_id
+    FIRESTORE_DB     = "hooklab"
     ALLOWED_ORIGINS  = "https://hooklab.web.app,https://hooklab.junaid.guru"
     BQ_DATASET       = "hooklab"
     BQ_TABLE         = "executions"
