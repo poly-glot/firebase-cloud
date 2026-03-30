@@ -60,7 +60,7 @@ module "hooklab_cloud_run" {
     BQ_DATASET       = "hooklab"
     BQ_TABLE         = "executions"
     GEMINI_MODEL     = "gemini-2.0-flash"
-    VERTEX_AI_LOCATION = var.region
+    VERTEX_AI_LOCATION = "europe-west1"
   }
 
   depends_on = [module.hooklab_identity]
