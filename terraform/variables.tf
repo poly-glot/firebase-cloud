@@ -25,3 +25,12 @@ variable "github_org" {
   description = "GitHub org or username that owns app repos"
   type        = string
 }
+
+# ─────────────────────────────────────────────────────────────
+# Secrets (passed to app modules)
+# ─────────────────────────────────────────────────────────────
+variable "resend_api_key" {
+  description = "Resend API key for transactional emails"
+  type        = string
+  sensitive   = true
+}

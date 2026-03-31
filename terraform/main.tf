@@ -98,11 +98,12 @@ module "artifact_registry" {
 module "apps" {
   source = "./apps"
 
-  project_id    = var.project_id
-  region        = var.region
-  github_org    = var.github_org
-  wif_pool_id   = module.wif_pool.pool_id
-  wif_pool_name = module.wif_pool.pool_name
+  project_id     = var.project_id
+  region         = var.region
+  github_org     = var.github_org
+  wif_pool_id    = module.wif_pool.pool_id
+  wif_pool_name  = module.wif_pool.pool_name
+  resend_api_key = var.resend_api_key
 
   depends_on = [module.project_setup]
 }
