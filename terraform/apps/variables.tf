@@ -22,3 +22,9 @@ variable "wif_pool_name" {
   description = "Shared WIF pool full resource name"
   type        = string
 }
+
+variable "resend_api_key" {
+  description = "Resend API key for transactional emails"
+  type        = string
+  sensitive   = true
+}
