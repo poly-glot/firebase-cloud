@@ -56,6 +56,8 @@ jobs:
         working-directory: ${{ env.TF_DIR }}
         run: terraform plan -no-color -input=false -out=tfplan
         continue-on-error: true
+        env:
+          TF_VAR_resend_api_key: ${{ secrets.RESEND_API_KEY }}
 
       - name: Comment Plan on PR
         if: github.event_name == 'pull_request'
