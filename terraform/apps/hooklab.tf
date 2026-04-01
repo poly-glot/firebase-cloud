@@ -53,6 +53,7 @@ module "hooklab_cloud_run" {
   region                = var.region
   service_name          = "hooklab-api"
   service_account_email = module.hooklab_identity.runtime_sa_email
+  image                 = "${var.region}-docker.pkg.dev/${var.project_id}/firebase-cloud/api:latest"
 
   env_vars = {
     GCP_PROJECT        = var.project_id
