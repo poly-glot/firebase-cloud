@@ -22,6 +22,7 @@ module "hooklab_identity" {
     "roles/aiplatform.user",
     "roles/bigquery.jobUser",
     "roles/bigquery.dataViewer",
+    "roles/firebaseauth.admin",
   ]
 }
 
