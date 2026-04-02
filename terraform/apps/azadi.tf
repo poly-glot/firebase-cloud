@@ -32,7 +32,6 @@ module "azadi_firestore" {
   database_name = "azadi"
   database_type = "DATASTORE_MODE"
 
-  depends_on = [module.project_setup]
 }
 
 module "azadi_hosting" {
@@ -41,7 +40,6 @@ module "azadi_hosting" {
   project_id = var.project_id
   site_id    = "azadi"
 
-  depends_on = [module.project_setup]
 }
 
 module "azadi_cloud_run" {
@@ -62,7 +60,7 @@ module "azadi_cloud_run" {
     RESEND_API_KEY    = var.resend_api_key
   }
 
-  depends_on = [module.project_setup, module.azadi_identity]
+  depends_on = [module.azadi_identity]
 }
 
 module "azadi_scheduler" {
