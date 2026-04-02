@@ -25,3 +25,29 @@ output "hooklab_firestore_db" {
   description = "Firestore database name"
   value       = module.hooklab_firestore.database_name
 }
+
+# ── Azadi Outputs ───────────────────────────────────────────
+output "azadi_wif_provider" {
+  description = "WIF_PROVIDER for azadi repo GitHub secrets"
+  value       = module.azadi_identity.wif_provider
+}
+
+output "azadi_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for azadi repo GitHub secrets"
+  value       = module.azadi_identity.ci_cd_sa_email
+}
+
+output "azadi_cloud_run_url" {
+  description = "Azadi Cloud Run service URL"
+  value       = module.azadi_cloud_run.service_url
+}
+
+output "azadi_hosting_url" {
+  description = "Azadi Firebase Hosting URL"
+  value       = module.azadi_hosting.site_url
+}
+
+output "azadi_firestore_db" {
+  description = "Azadi Firestore database name"
+  value       = module.azadi_firestore.database_name
+}
