@@ -13,5 +13,5 @@ resource "google_firestore_database" "app" {
   project     = var.project_id
   name        = var.database_name
   location_id = var.region == "us-central1" ? "nam5" : var.region
-  type        = "FIRESTORE_NATIVE"
+  type        = var.database_type
 }
