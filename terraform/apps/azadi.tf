@@ -52,7 +52,7 @@ module "azadi_cloud_run" {
   memory                = "1Gi"
 
   env_vars = {
-    GCP_PROJECT                = var.project_id
+    GCP_PROJECT_ID             = var.project_id
     FIRESTORE_DB               = "azadi"
     ALLOWED_ORIGINS            = "https://azadi.web.app,https://azadi.junaid.guru"
     RESEND_FROM_EMAIL          = "noreply@junaid.guru"
@@ -63,6 +63,7 @@ module "azadi_cloud_run" {
     VITE_STRIPE_PUBLISHABLE_KEY = var.azadi_stripe_publishable_key
     AZADI_ENCRYPTION_KEY       = var.azadi_encryption_key
     AZADI_ENCRYPTION_SALT      = var.azadi_encryption_salt
+    AZADI_SEED_DATA            = "true"
   }
 
   depends_on = [module.azadi_identity]
