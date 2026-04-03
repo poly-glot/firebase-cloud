@@ -105,5 +105,11 @@ module "apps" {
   wif_pool_name  = module.wif_pool.pool_name
   resend_api_key = var.resend_api_key
 
+  azadi_stripe_api_key         = var.azadi_stripe_api_key
+  azadi_stripe_webhook_secret  = var.azadi_stripe_webhook_secret
+  azadi_stripe_publishable_key = var.azadi_stripe_publishable_key
+  azadi_encryption_key         = var.azadi_encryption_key
+  azadi_encryption_salt        = var.azadi_encryption_salt
+
   depends_on = [module.project_setup]
 }
