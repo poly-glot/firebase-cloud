@@ -58,6 +58,11 @@ jobs:
         continue-on-error: true
         env:
           TF_VAR_resend_api_key: ${{ secrets.RESEND_API_KEY }}
+          TF_VAR_azadi_stripe_api_key: ${{ secrets.AZADI_STRIPE_API_KEY }}
+          TF_VAR_azadi_stripe_webhook_secret: ${{ secrets.AZADI_STRIPE_WEBHOOK_SECRET }}
+          TF_VAR_azadi_stripe_publishable_key: ${{ secrets.AZADI_STRIPE_PUBLISHABLE_KEY }}
+          TF_VAR_azadi_encryption_key: ${{ secrets.AZADI_ENCRYPTION_KEY }}
+          TF_VAR_azadi_encryption_salt: ${{ secrets.AZADI_ENCRYPTION_SALT }}
 
       - name: Comment Plan on PR
         if: github.event_name == 'pull_request'
