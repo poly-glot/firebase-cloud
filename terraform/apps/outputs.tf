@@ -72,3 +72,9 @@ output "openguessr_rtdb_url" {
   description = "OpenGuessr Realtime Database URL"
   value       = "https://${google_firebase_database_instance.openguessr.instance_id}.${google_firebase_database_instance.openguessr.region}.firebasedatabase.app"
 }
+
+output "openguessr_maps_web_api_key" {
+  description = "OpenGuessr referrer-restricted Maps Web API key (set as GitHub secret GOOGLE_MAPS_API_KEY)"
+  value       = google_apikeys_key.openguessr_maps_web.key_string
+  sensitive   = true
+}

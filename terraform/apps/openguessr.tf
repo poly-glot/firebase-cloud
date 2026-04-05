@@ -36,6 +36,37 @@ module "openguessr_identity" {
   ]
 }
 
+# ── Maps API Key (Web, referrer-restricted) ─────────────────
+# Used by the Street View panorama iframe in the frontend.
+# Injected at build time via VITE_GOOGLE_MAPS_API_KEY env var.
+resource "google_apikeys_key" "openguessr_maps_web" {
+  project      = var.project_id
+  name         = "openguessr-maps-web"
+  display_name = "OpenGuessr Maps Web"
+
+  restrictions {
+    browser_key_restrictions {
+      allowed_referrers = [
+        "https://openguessr.web.app/*",
+        "https://openguessr.junaid.guru/*",
+        "https://fir-cloud-491613.web.app/*",
+        "http://localhost:5173/*",
+        "http://localhost:5002/*",
+      ]
+    }
+
+    api_targets {
+      service = "maps-backend.googleapis.com"
+    }
+    api_targets {
+      service = "maps-embed-backend.googleapis.com"
+    }
+    api_targets {
+      service = "street-view-image-backend.googleapis.com"
+    }
+  }
+}
+
 # ── Firebase Hosting ────────────────────────────────────────
 module "openguessr_hosting" {
   source = "../modules/hosting"
