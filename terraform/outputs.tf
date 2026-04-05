@@ -74,3 +74,19 @@ output "azadi_firestore_db" {
   description = "Azadi Firestore database name"
   value       = module.apps.azadi_firestore_db
 }
+
+# ── OpenGuessr ──────────────────────────────────────────────
+output "openguessr_wif_provider" {
+  description = "WIF_PROVIDER for openguessr repo GitHub secrets"
+  value       = module.apps.openguessr_wif_provider
+}
+
+output "openguessr_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for openguessr repo GitHub secrets"
+  value       = module.apps.openguessr_gcp_sa_email
+}
+
+output "openguessr_hosting_url" {
+  description = "OpenGuessr Firebase Hosting URL"
+  value       = module.apps.openguessr_hosting_url
+}

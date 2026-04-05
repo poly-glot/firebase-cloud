@@ -63,6 +63,7 @@ jobs:
           TF_VAR_azadi_stripe_publishable_key: ${{ secrets.AZADI_STRIPE_PUBLISHABLE_KEY }}
           TF_VAR_azadi_encryption_key: ${{ secrets.AZADI_ENCRYPTION_KEY }}
           TF_VAR_azadi_encryption_salt: ${{ secrets.AZADI_ENCRYPTION_SALT }}
+          TF_VAR_openguessr_google_maps_api_key: ${{ secrets.OPENGUESSR_GOOGLE_MAPS_API_KEY }}
 
       - name: Comment Plan on PR
         if: github.event_name == 'pull_request'

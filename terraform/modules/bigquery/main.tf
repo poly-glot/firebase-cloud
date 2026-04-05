@@ -30,20 +30,20 @@ resource "google_bigquery_table" "executions" {
   }
 
   schema = jsonencode([
-    { name = "id",                  type = "STRING",    mode = "REQUIRED" },
-    { name = "endpoint_id",         type = "STRING",    mode = "REQUIRED" },
-    { name = "user_id",             type = "STRING",    mode = "REQUIRED" },
-    { name = "method",              type = "STRING",    mode = "NULLABLE" },
-    { name = "url",                 type = "STRING",    mode = "NULLABLE" },
-    { name = "status",              type = "STRING",    mode = "NULLABLE" },
-    { name = "response_status",     type = "INT64",     mode = "NULLABLE" },
-    { name = "duration_ms",         type = "FLOAT64",   mode = "NULLABLE" },
-    { name = "ip",                  type = "STRING",    mode = "NULLABLE" },
+    { name = "id", type = "STRING", mode = "REQUIRED" },
+    { name = "endpoint_id", type = "STRING", mode = "REQUIRED" },
+    { name = "user_id", type = "STRING", mode = "REQUIRED" },
+    { name = "method", type = "STRING", mode = "NULLABLE" },
+    { name = "url", type = "STRING", mode = "NULLABLE" },
+    { name = "status", type = "STRING", mode = "NULLABLE" },
+    { name = "response_status", type = "INT64", mode = "NULLABLE" },
+    { name = "duration_ms", type = "FLOAT64", mode = "NULLABLE" },
+    { name = "ip", type = "STRING", mode = "NULLABLE" },
     { name = "execution_timestamp", type = "TIMESTAMP", mode = "REQUIRED" },
-    { name = "request_body",        type = "STRING",    mode = "NULLABLE" },
-    { name = "response_body",       type = "STRING",    mode = "NULLABLE" },
-    { name = "request_headers",     type = "STRING",    mode = "NULLABLE" },
-    { name = "query_params",        type = "STRING",    mode = "NULLABLE" },
+    { name = "request_body", type = "STRING", mode = "NULLABLE" },
+    { name = "response_body", type = "STRING", mode = "NULLABLE" },
+    { name = "request_headers", type = "STRING", mode = "NULLABLE" },
+    { name = "query_params", type = "STRING", mode = "NULLABLE" },
   ])
 
   labels = {

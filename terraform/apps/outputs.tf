@@ -51,3 +51,24 @@ output "azadi_firestore_db" {
   description = "Azadi Firestore database name"
   value       = module.azadi_firestore.database_name
 }
+
+# ── OpenGuessr Outputs ──────────────────────────────────────
+output "openguessr_wif_provider" {
+  description = "WIF_PROVIDER for openguessr repo GitHub secrets"
+  value       = module.openguessr_identity.wif_provider
+}
+
+output "openguessr_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for openguessr repo GitHub secrets"
+  value       = module.openguessr_identity.ci_cd_sa_email
+}
+
+output "openguessr_hosting_url" {
+  description = "OpenGuessr Firebase Hosting URL"
+  value       = module.openguessr_hosting.site_url
+}
+
+output "openguessr_rtdb_url" {
+  description = "OpenGuessr Realtime Database URL"
+  value       = "https://${google_firebase_database_instance.openguessr.instance_id}.${google_firebase_database_instance.openguessr.region}.firebasedatabase.app"
+}

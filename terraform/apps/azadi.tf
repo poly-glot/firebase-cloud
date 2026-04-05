@@ -52,18 +52,18 @@ module "azadi_cloud_run" {
   memory                = "1Gi"
 
   env_vars = {
-    GCP_PROJECT_ID             = var.project_id
-    FIRESTORE_DB               = "azadi"
-    ALLOWED_ORIGINS            = "https://azadi.web.app,https://azadi.junaid.guru"
-    RESEND_FROM_EMAIL          = "noreply@junaid.guru"
-    APP_DOMAIN                 = "azadi.junaid.guru"
-    RESEND_API_KEY             = var.resend_api_key
-    STRIPE_API_KEY             = var.azadi_stripe_api_key
-    STRIPE_WEBHOOK_SECRET      = var.azadi_stripe_webhook_secret
+    GCP_PROJECT_ID              = var.project_id
+    FIRESTORE_DB                = "azadi"
+    ALLOWED_ORIGINS             = "https://azadi.web.app,https://azadi.junaid.guru"
+    RESEND_FROM_EMAIL           = "noreply@junaid.guru"
+    APP_DOMAIN                  = "azadi.junaid.guru"
+    RESEND_API_KEY              = var.resend_api_key
+    STRIPE_API_KEY              = var.azadi_stripe_api_key
+    STRIPE_WEBHOOK_SECRET       = var.azadi_stripe_webhook_secret
     VITE_STRIPE_PUBLISHABLE_KEY = var.azadi_stripe_publishable_key
-    AZADI_ENCRYPTION_KEY       = var.azadi_encryption_key
-    AZADI_ENCRYPTION_SALT      = var.azadi_encryption_salt
-    AZADI_SEED_DATA            = "true"
+    AZADI_ENCRYPTION_KEY        = var.azadi_encryption_key
+    AZADI_ENCRYPTION_SALT       = var.azadi_encryption_salt
+    AZADI_SEED_DATA             = "true"
   }
 
   depends_on = [module.azadi_identity]
