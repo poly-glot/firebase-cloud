@@ -13,12 +13,26 @@ module "openguessr_identity" {
   wif_pool_id   = var.wif_pool_id
   wif_pool_name = var.wif_pool_name
 
+  # CI/CD SA needs cloudscheduler.admin on top of the default roles to create
+  # and update the scheduler jobs Firebase auto-provisions for onSchedule
+  # functions (generateLocationPool, cleanup).
+  ci_cd_roles = [
+    "roles/firebase.admin",
+    "roles/run.admin",
+    "roles/iam.serviceAccountUser",
+    "roles/artifactregistry.writer",
+    "roles/cloudbuild.builds.builder",
+    "roles/firebasehosting.admin",
+    "roles/secretmanager.secretAccessor",
+    "roles/serviceusage.serviceUsageConsumer",
+    "roles/cloudscheduler.admin",
+  ]
+
   runtime_roles = [
     "roles/firebasedatabase.admin",
     "roles/firebaseauth.admin",
     "roles/secretmanager.secretAccessor",
     "roles/aiplatform.user",
-    "roles/cloudscheduler.admin",
   ]
 }
 
@@ -59,6 +73,21 @@ resource "google_secret_manager_secret_version" "openguessr_google_maps_api_key"
   secret      = google_secret_manager_secret.openguessr_google_maps_api_key.id
   secret_data = var.openguessr_google_maps_api_key
 }
+
+# Allow the runtime SA to sign blobs as itself. Required by
+# getAuth().createCustomToken() in the login/createGame functions — the Firebase
+# Admin SDK calls iam.serviceAccounts.signBlob to mint custom tokens.
+resource "google_service_account_iam_member" "openguessr_runtime_token_creator" {
+  service_account_id = "projects/${var.project_id}/serviceAccounts/${module.openguessr_identity.runtime_sa_email}"
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = "serviceAccount:${module.openguessr_identity.runtime_sa_email}"
+
+  depends_on = [module.openguessr_identity]
+}
+
+# Allow the CI/CD SA to deploy functions that run as the runtime SA.
+# roles/iam.serviceAccountUser is already granted project-wide to the CI/CD SA
+# by the app-identity module, so nothing extra is needed for actAs here.
 
 # Grant runtime SA access to the secret (used by Cloud Functions at runtime)
 resource "google_secret_manager_secret_iam_member" "openguessr_maps_key_runtime_access" {
