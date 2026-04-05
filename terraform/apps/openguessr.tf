@@ -13,12 +13,26 @@ module "openguessr_identity" {
   wif_pool_id   = var.wif_pool_id
   wif_pool_name = var.wif_pool_name
 
+  # CI/CD SA needs cloudscheduler.admin on top of the default roles to create
+  # and update the scheduler jobs Firebase auto-provisions for onSchedule
+  # functions (generateLocationPool, cleanup).
+  ci_cd_roles = [
+    "roles/firebase.admin",
+    "roles/run.admin",
+    "roles/iam.serviceAccountUser",
+    "roles/artifactregistry.writer",
+    "roles/cloudbuild.builds.builder",
+    "roles/firebasehosting.admin",
+    "roles/secretmanager.secretAccessor",
+    "roles/serviceusage.serviceUsageConsumer",
+    "roles/cloudscheduler.admin",
+  ]
+
   runtime_roles = [
     "roles/firebasedatabase.admin",
     "roles/firebaseauth.admin",
     "roles/secretmanager.secretAccessor",
     "roles/aiplatform.user",
-    "roles/cloudscheduler.admin",
   ]
 }
 
