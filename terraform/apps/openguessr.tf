@@ -60,12 +60,26 @@ resource "google_secret_manager_secret_version" "openguessr_google_maps_api_key"
   secret_data = var.openguessr_google_maps_api_key
 }
 
-# Grant runtime SA access to the secret
-resource "google_secret_manager_secret_iam_member" "openguessr_maps_key_access" {
+# Grant runtime SA access to the secret (used by Cloud Functions at runtime)
+resource "google_secret_manager_secret_iam_member" "openguessr_maps_key_runtime_access" {
   project   = var.project_id
   secret_id = google_secret_manager_secret.openguessr_google_maps_api_key.secret_id
   role      = "roles/secretmanager.secretAccessor"
   member    = "serviceAccount:${module.openguessr_identity.runtime_sa_email}"
+
+  depends_on = [module.openguessr_identity]
+}
+
+# Grant CI/CD SA admin on the secret (needed by `firebase deploy` with defineSecret:
+#   - secretmanager.secrets.get (verify secret exists)
+#   - secretmanager.secrets.setIamPolicy (bind runtime SA to the function)
+#   - secretmanager.versions.add (update secret value on deploy)
+# The project-level secretmanager.secretAccessor role only grants versions.access.
+resource "google_secret_manager_secret_iam_member" "openguessr_maps_key_cicd_admin" {
+  project   = var.project_id
+  secret_id = google_secret_manager_secret.openguessr_google_maps_api_key.secret_id
+  role      = "roles/secretmanager.admin"
+  member    = "serviceAccount:${module.openguessr_identity.ci_cd_sa_email}"
 
   depends_on = [module.openguessr_identity]
 }
