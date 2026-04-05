@@ -74,6 +74,21 @@ resource "google_secret_manager_secret_version" "openguessr_google_maps_api_key"
   secret_data = var.openguessr_google_maps_api_key
 }
 
+# Allow the runtime SA to sign blobs as itself. Required by
+# getAuth().createCustomToken() in the login/createGame functions — the Firebase
+# Admin SDK calls iam.serviceAccounts.signBlob to mint custom tokens.
+resource "google_service_account_iam_member" "openguessr_runtime_token_creator" {
+  service_account_id = "projects/${var.project_id}/serviceAccounts/${module.openguessr_identity.runtime_sa_email}"
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = "serviceAccount:${module.openguessr_identity.runtime_sa_email}"
+
+  depends_on = [module.openguessr_identity]
+}
+
+# Allow the CI/CD SA to deploy functions that run as the runtime SA.
+# roles/iam.serviceAccountUser is already granted project-wide to the CI/CD SA
+# by the app-identity module, so nothing extra is needed for actAs here.
+
 # Grant runtime SA access to the secret (used by Cloud Functions at runtime)
 resource "google_secret_manager_secret_iam_member" "openguessr_maps_key_runtime_access" {
   project   = var.project_id
