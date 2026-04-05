@@ -13,6 +13,7 @@ resource "google_project_service" "apis" {
     "firebaserules.googleapis.com",
     "firebasehosting.googleapis.com",
     "firestore.googleapis.com",
+    "firebasedatabase.googleapis.com",
     "identitytoolkit.googleapis.com",
     "cloudbuild.googleapis.com",
     "run.googleapis.com",

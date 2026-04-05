@@ -31,8 +31,8 @@ terraform {
 
   # ── Remote State ────────────────────────────────────────────
   backend "gcs" {
-     bucket = "firebase-cloud-491613-tf-state"
-     prefix = "terraform/state"
+    bucket = "firebase-cloud-491613-tf-state"
+    prefix = "terraform/state"
   }
 }
 
@@ -45,10 +45,10 @@ provider "google" {
 }
 
 provider "google-beta" {
-  project                     = var.project_id
-  region                      = var.region
-  user_project_override       = true
-  billing_project             = var.project_id
+  project               = var.project_id
+  region                = var.region
+  user_project_override = true
+  billing_project       = var.project_id
 }
 
 # ─────────────────────────────────────────────────────────────
@@ -110,6 +110,8 @@ module "apps" {
   azadi_stripe_publishable_key = var.azadi_stripe_publishable_key
   azadi_encryption_key         = var.azadi_encryption_key
   azadi_encryption_salt        = var.azadi_encryption_salt
+
+  openguessr_google_maps_api_key = var.openguessr_google_maps_api_key
 
   depends_on = [module.project_setup]
 }

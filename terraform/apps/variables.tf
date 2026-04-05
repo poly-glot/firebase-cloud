@@ -58,3 +58,10 @@ variable "azadi_encryption_salt" {
   type        = string
   sensitive   = true
 }
+
+# ── OpenGuessr ──────────────────────────────────────────────
+variable "openguessr_google_maps_api_key" {
+  description = "Google Maps API key for OpenGuessr Street View"
+  type        = string
+  sensitive   = true
+}
