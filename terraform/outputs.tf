@@ -75,6 +75,32 @@ output "azadi_firestore_db" {
   value       = module.apps.azadi_firestore_db
 }
 
+# ── Azadi Go ────────────────────────────────────────────────
+output "azadi_go_wif_provider" {
+  description = "WIF_PROVIDER for azadi-go repo GitHub secrets"
+  value       = module.apps.azadi_go_wif_provider
+}
+
+output "azadi_go_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for azadi-go repo GitHub secrets"
+  value       = module.apps.azadi_go_gcp_sa_email
+}
+
+output "azadi_go_cloud_run_url" {
+  description = "Azadi Go Cloud Run service URL"
+  value       = module.apps.azadi_go_cloud_run_url
+}
+
+output "azadi_go_hosting_url" {
+  description = "Azadi Go Firebase Hosting URL"
+  value       = module.apps.azadi_go_hosting_url
+}
+
+output "azadi_go_firestore_db" {
+  description = "Azadi Go Firestore database name"
+  value       = module.apps.azadi_go_firestore_db
+}
+
 # ── OpenGuessr ──────────────────────────────────────────────
 output "openguessr_wif_provider" {
   description = "WIF_PROVIDER for openguessr repo GitHub secrets"

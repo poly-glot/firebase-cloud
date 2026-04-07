@@ -34,6 +34,10 @@ resource "google_project_service" "apis" {
     "bigquerydatatransfer.googleapis.com",
     "aiplatform.googleapis.com",
     "cloudscheduler.googleapis.com",
+    "maps-backend.googleapis.com",
+    "maps-embed-backend.googleapis.com",
+    "street-view-image-backend.googleapis.com",
+    "apikeys.googleapis.com",
   ])
 
   project            = var.project_id
