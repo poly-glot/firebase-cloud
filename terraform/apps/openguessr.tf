@@ -40,6 +40,7 @@ module "openguessr_identity" {
 # Used by the Street View panorama iframe in the frontend.
 # Injected at build time via VITE_GOOGLE_MAPS_API_KEY env var.
 resource "google_apikeys_key" "openguessr_maps_web" {
+  provider     = google-beta
   project      = var.project_id
   name         = "openguessr-maps-web"
   display_name = "OpenGuessr Maps Web"
