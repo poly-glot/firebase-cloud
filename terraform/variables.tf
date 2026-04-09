@@ -66,6 +66,21 @@ variable "azadi_encryption_salt" {
 }
 
 # ─────────────────────────────────────────────────────────────
+# Amazing Landing Secrets
+# ─────────────────────────────────────────────────────────────
+variable "amazing_landing_encryption_key" {
+  description = "AES encryption key for Amazing Landing session cookies"
+  type        = string
+  sensitive   = true
+}
+
+variable "amazing_landing_admin_password_hash" {
+  description = "Bcrypt password hash for the Amazing Landing admin user"
+  type        = string
+  sensitive   = true
+}
+
+# ─────────────────────────────────────────────────────────────
 # OpenGuessr Secrets
 # ─────────────────────────────────────────────────────────────
 variable "openguessr_google_maps_api_key" {

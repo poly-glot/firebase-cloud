@@ -59,6 +59,19 @@ variable "azadi_encryption_salt" {
   sensitive   = true
 }
 
+# ── Amazing Landing ─────────────────────────────────────────
+variable "amazing_landing_encryption_key" {
+  description = "AES encryption key for Amazing Landing session cookies"
+  type        = string
+  sensitive   = true
+}
+
+variable "amazing_landing_admin_password_hash" {
+  description = "Bcrypt password hash for the Amazing Landing admin user"
+  type        = string
+  sensitive   = true
+}
+
 # ── OpenGuessr ──────────────────────────────────────────────
 variable "openguessr_google_maps_api_key" {
   description = "Google Maps API key for OpenGuessr Street View"

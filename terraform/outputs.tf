@@ -101,6 +101,32 @@ output "azadi_go_firestore_db" {
   value       = module.apps.azadi_go_firestore_db
 }
 
+# ── Amazing Landing ─────────────────────────────────────────
+output "amazing_landing_wif_provider" {
+  description = "WIF_PROVIDER for amazing-landing repo GitHub secrets"
+  value       = module.apps.amazing_landing_wif_provider
+}
+
+output "amazing_landing_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for amazing-landing repo GitHub secrets"
+  value       = module.apps.amazing_landing_gcp_sa_email
+}
+
+output "amazing_landing_cloud_run_url" {
+  description = "Amazing Landing Cloud Run service URL"
+  value       = module.apps.amazing_landing_cloud_run_url
+}
+
+output "amazing_landing_hosting_url" {
+  description = "Amazing Landing Firebase Hosting URL"
+  value       = module.apps.amazing_landing_hosting_url
+}
+
+output "amazing_landing_firestore_db" {
+  description = "Amazing Landing Firestore database name"
+  value       = module.apps.amazing_landing_firestore_db
+}
+
 # ── OpenGuessr ──────────────────────────────────────────────
 output "openguessr_wif_provider" {
   description = "WIF_PROVIDER for openguessr repo GitHub secrets"
