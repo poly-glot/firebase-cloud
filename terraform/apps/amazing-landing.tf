@@ -47,7 +47,7 @@ module "amazing_landing_cloud_run" {
   region                = var.region
   service_name          = "amazing-landing-api"
   service_account_email = module.amazing_landing_identity.runtime_sa_email
-  memory                = "256Mi"
+  memory                = "512Mi"
   health_path           = "/health"
 
   env_vars = {
