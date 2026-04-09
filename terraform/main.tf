@@ -111,6 +111,9 @@ module "apps" {
   azadi_encryption_key         = var.azadi_encryption_key
   azadi_encryption_salt        = var.azadi_encryption_salt
 
+  amazing_landing_encryption_key      = var.amazing_landing_encryption_key
+  amazing_landing_admin_password_hash = var.amazing_landing_admin_password_hash
+
   openguessr_google_maps_api_key = var.openguessr_google_maps_api_key
 
   depends_on = [module.project_setup]
