@@ -193,3 +193,29 @@ output "pakistan_2003_required_dns" {
   description = "DNS records required at the registrar to verify and serve the pakistan-2003 custom domain"
   value       = module.apps.pakistan_2003_required_dns
 }
+
+# ── thehighlands ────────────────────────────────────────────
+output "thehighlands_wif_provider" {
+  description = "WIF_PROVIDER for thehighlands repo GitHub secrets"
+  value       = module.apps.thehighlands_wif_provider
+}
+
+output "thehighlands_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for thehighlands repo GitHub secrets"
+  value       = module.apps.thehighlands_gcp_sa_email
+}
+
+output "thehighlands_hosting_url" {
+  description = "thehighlands Firebase Hosting URL"
+  value       = module.apps.thehighlands_hosting_url
+}
+
+output "thehighlands_custom_domain" {
+  description = "thehighlands custom domain"
+  value       = module.apps.thehighlands_custom_domain
+}
+
+output "thehighlands_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the thehighlands custom domain"
+  value       = module.apps.thehighlands_required_dns
+}

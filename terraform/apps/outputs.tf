@@ -181,3 +181,29 @@ output "pakistan_2003_required_dns" {
   description = "DNS records required at the registrar to verify and serve the custom domain"
   value       = google_firebase_hosting_custom_domain.pakistan_2003.required_dns_updates
 }
+
+# ── thehighlands Outputs ────────────────────────────────────
+output "thehighlands_wif_provider" {
+  description = "WIF_PROVIDER for thehighlands repo GitHub secrets"
+  value       = module.thehighlands_identity.wif_provider
+}
+
+output "thehighlands_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for thehighlands repo GitHub secrets"
+  value       = module.thehighlands_identity.ci_cd_sa_email
+}
+
+output "thehighlands_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.thehighlands_hosting.site_url
+}
+
+output "thehighlands_custom_domain" {
+  description = "Custom domain for thehighlands"
+  value       = google_firebase_hosting_custom_domain.thehighlands.custom_domain
+}
+
+output "thehighlands_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.thehighlands.required_dns_updates
+}
