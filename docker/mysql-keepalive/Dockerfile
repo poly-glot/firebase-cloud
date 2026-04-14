@@ -1,6 +1,4 @@
-FROM alpine:3.19
-
-RUN apk add --no-cache mysql-client
+FROM mysql:8.4
 
 COPY ping.sh /ping.sh
 RUN chmod +x /ping.sh
