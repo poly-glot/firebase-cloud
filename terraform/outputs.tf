@@ -167,3 +167,29 @@ output "amazingcar_2003_required_dns" {
   description = "DNS records required at the registrar to verify and serve the amazingcar-2003 custom domain"
   value       = module.apps.amazingcar_2003_required_dns
 }
+
+# ── pakistan-2003 ───────────────────────────────────────────
+output "pakistan_2003_wif_provider" {
+  description = "WIF_PROVIDER for pakistan-2003 repo GitHub secrets"
+  value       = module.apps.pakistan_2003_wif_provider
+}
+
+output "pakistan_2003_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for pakistan-2003 repo GitHub secrets"
+  value       = module.apps.pakistan_2003_gcp_sa_email
+}
+
+output "pakistan_2003_hosting_url" {
+  description = "pakistan-2003 Firebase Hosting URL"
+  value       = module.apps.pakistan_2003_hosting_url
+}
+
+output "pakistan_2003_custom_domain" {
+  description = "pakistan-2003 custom domain"
+  value       = module.apps.pakistan_2003_custom_domain
+}
+
+output "pakistan_2003_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the pakistan-2003 custom domain"
+  value       = module.apps.pakistan_2003_required_dns
+}
