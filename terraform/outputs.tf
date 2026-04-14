@@ -142,3 +142,28 @@ output "openguessr_hosting_url" {
   description = "OpenGuessr Firebase Hosting URL"
   value       = module.apps.openguessr_hosting_url
 }
+# ── amazingcar-2003 ─────────────────────────────────────────
+output "amazingcar_2003_wif_provider" {
+  description = "WIF_PROVIDER for amazingcar-2003 repo GitHub secrets"
+  value       = module.apps.amazingcar_2003_wif_provider
+}
+
+output "amazingcar_2003_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for amazingcar-2003 repo GitHub secrets"
+  value       = module.apps.amazingcar_2003_gcp_sa_email
+}
+
+output "amazingcar_2003_hosting_url" {
+  description = "amazingcar-2003 Firebase Hosting URL"
+  value       = module.apps.amazingcar_2003_hosting_url
+}
+
+output "amazingcar_2003_custom_domain" {
+  description = "amazingcar-2003 custom domain"
+  value       = module.apps.amazingcar_2003_custom_domain
+}
+
+output "amazingcar_2003_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the amazingcar-2003 custom domain"
+  value       = module.apps.amazingcar_2003_required_dns
+}
