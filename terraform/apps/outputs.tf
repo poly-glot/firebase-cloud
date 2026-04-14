@@ -207,3 +207,29 @@ output "thehighlands_required_dns" {
   description = "DNS records required at the registrar to verify and serve the custom domain"
   value       = google_firebase_hosting_custom_domain.thehighlands.required_dns_updates
 }
+
+# ── crea8ivedesign Outputs ──────────────────────────────────
+output "crea8ivedesign_wif_provider" {
+  description = "WIF_PROVIDER for crea8ivedesign repo GitHub secrets"
+  value       = module.crea8ivedesign_identity.wif_provider
+}
+
+output "crea8ivedesign_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for crea8ivedesign repo GitHub secrets"
+  value       = module.crea8ivedesign_identity.ci_cd_sa_email
+}
+
+output "crea8ivedesign_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.crea8ivedesign_hosting.site_url
+}
+
+output "crea8ivedesign_custom_domain" {
+  description = "Custom domain for crea8ivedesign"
+  value       = google_firebase_hosting_custom_domain.crea8ivedesign.custom_domain
+}
+
+output "crea8ivedesign_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.crea8ivedesign.required_dns_updates
+}
