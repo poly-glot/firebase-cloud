@@ -105,7 +105,7 @@ resource "google_cloud_run_v2_job" "mysql_keepalive" {
         resources {
           limits = {
             cpu    = "1"
-            memory = "128Mi"
+            memory = "512Mi"
           }
         }
       }
