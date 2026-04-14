@@ -130,3 +130,28 @@ output "openguessr_maps_web_api_key" {
   value       = google_apikeys_key.openguessr_maps_web.key_string
   sensitive   = true
 }
+# ── amazingcar-2003 Outputs ─────────────────────────────────
+output "amazingcar_2003_wif_provider" {
+  description = "WIF_PROVIDER for amazingcar-2003 repo GitHub secrets"
+  value       = module.amazingcar_2003_identity.wif_provider
+}
+
+output "amazingcar_2003_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for amazingcar-2003 repo GitHub secrets"
+  value       = module.amazingcar_2003_identity.ci_cd_sa_email
+}
+
+output "amazingcar_2003_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.amazingcar_2003_hosting.site_url
+}
+
+output "amazingcar_2003_custom_domain" {
+  description = "Custom domain for amazingcar-2003"
+  value       = google_firebase_hosting_custom_domain.amazingcar_2003.custom_domain
+}
+
+output "amazingcar_2003_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.amazingcar_2003.required_dns_updates
+}
