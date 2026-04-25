@@ -147,3 +147,8 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
           terraform output >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Trigger personal-cloud MySQL provisioning
+        env:
+          GH_TOKEN: ${{ secrets.MYSQL_APPS_DISPATCH_TOKEN }}
+        run: gh workflow run terraform-mysql-apps.yaml --repo poly-glot/personal-cloud --ref main
