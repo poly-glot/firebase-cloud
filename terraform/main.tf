@@ -116,5 +116,7 @@ module "apps" {
 
   openguessr_google_maps_api_key = var.openguessr_google_maps_api_key
 
+  personal_cloud_deploy_sa = var.personal_cloud_deploy_sa
+
   depends_on = [module.project_setup]
 }
