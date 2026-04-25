@@ -245,3 +245,34 @@ output "crea8ivedesign_required_dns" {
   description = "DNS records required at the registrar to verify and serve the crea8ivedesign custom domain"
   value       = module.apps.crea8ivedesign_required_dns
 }
+
+# ── shehryar ────────────────────────────────────────────────
+output "shehryar_wif_provider" {
+  description = "WIF_PROVIDER for shehryar repo GitHub secrets"
+  value       = module.apps.shehryar_wif_provider
+}
+
+output "shehryar_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for shehryar repo GitHub secrets"
+  value       = module.apps.shehryar_gcp_sa_email
+}
+
+output "shehryar_hosting_url" {
+  description = "shehryar Firebase Hosting URL"
+  value       = module.apps.shehryar_hosting_url
+}
+
+output "shehryar_custom_domain" {
+  description = "shehryar custom domain"
+  value       = module.apps.shehryar_custom_domain
+}
+
+output "shehryar_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the shehryar custom domain"
+  value       = module.apps.shehryar_required_dns
+}
+
+output "shehryar_api_url" {
+  description = "shehryar Cloud Run API URL"
+  value       = module.apps.shehryar_api_url
+}

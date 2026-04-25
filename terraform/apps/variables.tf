@@ -78,3 +78,9 @@ variable "openguessr_google_maps_api_key" {
   type        = string
   sensitive   = true
 }
+
+# ── Cross-stack: personal-cloud (OCI MySQL provisioning) ────
+variable "personal_cloud_deploy_sa" {
+  description = "personal-cloud workflow's deploy SA email; granted reader on bootstrap GSM secrets so it can authenticate to OCI tfstate and read MySQL admin creds"
+  type        = string
+}

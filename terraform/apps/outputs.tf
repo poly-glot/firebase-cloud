@@ -233,3 +233,34 @@ output "crea8ivedesign_required_dns" {
   description = "DNS records required at the registrar to verify and serve the custom domain"
   value       = google_firebase_hosting_custom_domain.crea8ivedesign.required_dns_updates
 }
+
+# ── shehryar Outputs ────────────────────────────────────────
+output "shehryar_wif_provider" {
+  description = "WIF_PROVIDER for shehryar repo GitHub secrets"
+  value       = module.shehryar_identity.wif_provider
+}
+
+output "shehryar_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for shehryar repo GitHub secrets"
+  value       = module.shehryar_identity.ci_cd_sa_email
+}
+
+output "shehryar_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.shehryar_hosting.site_url
+}
+
+output "shehryar_custom_domain" {
+  description = "Custom domain for shehryar"
+  value       = google_firebase_hosting_custom_domain.shehryar.custom_domain
+}
+
+output "shehryar_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.shehryar.required_dns_updates
+}
+
+output "shehryar_api_url" {
+  description = "Cloud Run URL for the shehryar chatapp backend"
+  value       = google_cloud_run_v2_service.shehryar_api.uri
+}
