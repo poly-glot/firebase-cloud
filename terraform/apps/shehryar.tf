@@ -86,7 +86,10 @@ resource "google_cloud_run_v2_service" "shehryar_api" {
     }
 
     containers {
-      image = "${var.region}-docker.pkg.dev/${var.project_id}/firebase-cloud/shehryar-api:latest"
+      # Bootstrap placeholder. The shehryar repo's CI/CD pushes the real
+      # image and runs `gcloud run deploy --image=...` to swap it in.
+      # lifecycle.ignore_changes below prevents terraform from reverting.
+      image = "gcr.io/cloudrun/hello"
 
       resources {
         limits = {
