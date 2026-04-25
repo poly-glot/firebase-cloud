@@ -48,7 +48,7 @@ resource "google_firebase_hosting_custom_domain" "shehryar" {
   provider      = google-beta
   project       = var.project_id
   site_id       = module.shehryar_hosting.site_id
-  custom_domain = "shehryar.junaid.guru"
+  custom_domain = "shehryar.dev"
 
   wait_dns_verification = false
 }
