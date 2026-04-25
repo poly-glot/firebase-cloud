@@ -67,6 +67,26 @@ module "shehryar_db" {
   runtime_sa_email = module.shehryar_identity.runtime_sa_email
 }
 
+# CI/CD reads these at deploy time to run database migrations from the
+# GitHub Actions runner. Scoped per-secret rather than project-wide so
+# the CI SA can't read other apps' creds or the OCI admin password.
+locals {
+  shehryar_ci_db_secrets = [
+    "db-host",
+    "shehryar-db-user",
+    "shehryar-db-pass",
+    "shehryar-db-name",
+  ]
+}
+
+resource "google_secret_manager_secret_iam_member" "shehryar_ci_db_read" {
+  for_each  = toset(local.shehryar_ci_db_secrets)
+  project   = var.project_id
+  secret_id = each.value
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${module.shehryar_identity.ci_cd_sa_email}"
+}
+
 # ── Cloud Run (inlined to wire Secret Manager refs) ─────────
 resource "google_cloud_run_v2_service" "shehryar_api" {
   provider = google-beta
