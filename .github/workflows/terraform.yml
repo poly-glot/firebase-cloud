@@ -66,6 +66,8 @@ jobs:
           TF_VAR_openguessr_google_maps_api_key: ${{ secrets.OPENGUESSR_GOOGLE_MAPS_API_KEY }}
           TF_VAR_amazing_landing_encryption_key: ${{ secrets.AMAZING_LANDING_ENCRYPTION_KEY }}
           TF_VAR_amazing_landing_admin_password_hash: ${{ secrets.AMAZING_LANDING_ADMIN_PASSWORD_HASH }}
+          TF_VAR_unsplash_access_key: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          TF_VAR_gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Comment Plan on PR
         if: github.event_name == 'pull_request'

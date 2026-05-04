@@ -264,3 +264,49 @@ output "shehryar_api_url" {
   description = "Cloud Run URL for the shehryar chatapp backend"
   value       = google_cloud_run_v2_service.shehryar_api.uri
 }
+
+# ── Mocktail Outputs ────────────────────────────────────────
+output "mocktail_wif_provider" {
+  description = "WIF_PROVIDER for mocktail repo GitHub secrets"
+  value       = module.mocktail_identity.wif_provider
+}
+
+output "mocktail_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for mocktail repo GitHub secrets"
+  value       = module.mocktail_identity.ci_cd_sa_email
+}
+
+output "mocktail_runtime_sa_email" {
+  description = "Mocktail runtime service account"
+  value       = module.mocktail_identity.runtime_sa_email
+}
+
+output "mocktail_cloud_run_url" {
+  description = "Cloud Run URL for the Zig collab service"
+  value       = google_cloud_run_v2_service.mocktail.uri
+}
+
+output "mocktail_email_auth_url" {
+  description = "Cloud Run URL for the Deno email-auth/AI service"
+  value       = module.mocktail_email_auth_cloud_run.service_url
+}
+
+output "mocktail_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.mocktail_hosting.site_url
+}
+
+output "mocktail_firestore_db" {
+  description = "Firestore database name"
+  value       = module.mocktail_firestore.database_name
+}
+
+output "mocktail_custom_domain" {
+  description = "Custom domain for mocktail"
+  value       = google_firebase_hosting_custom_domain.mocktail.custom_domain
+}
+
+output "mocktail_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.mocktail.required_dns_updates
+}

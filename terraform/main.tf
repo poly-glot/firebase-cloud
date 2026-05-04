@@ -118,5 +118,8 @@ module "apps" {
 
   personal_cloud_deploy_sa = var.personal_cloud_deploy_sa
 
+  unsplash_access_key = var.unsplash_access_key
+  gemini_api_key      = var.gemini_api_key
+
   depends_on = [module.project_setup]
 }

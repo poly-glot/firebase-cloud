@@ -84,3 +84,18 @@ variable "personal_cloud_deploy_sa" {
   description = "personal-cloud workflow's deploy SA email; granted reader on bootstrap GSM secrets so it can authenticate to OCI tfstate and read MySQL admin creds"
   type        = string
 }
+
+# ─────────────────────────────────────────────────────────────
+# Mocktail (and future cross-app shared keys)
+# ─────────────────────────────────────────────────────────────
+variable "unsplash_access_key" {
+  description = "Unsplash Access Key (shared)"
+  type        = string
+  sensitive   = true
+}
+
+variable "gemini_api_key" {
+  description = "Gemini API key (shared)"
+  type        = string
+  sensitive   = true
+}

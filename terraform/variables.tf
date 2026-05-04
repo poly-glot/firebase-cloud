@@ -97,3 +97,18 @@ variable "personal_cloud_deploy_sa" {
   type        = string
   default     = "personal-cloud-ci-cd@firebase-cloud-491613.iam.gserviceaccount.com"
 }
+
+# ─────────────────────────────────────────────────────────────
+# Shared keys used by multiple apps (mocktail today; reusable later)
+# ─────────────────────────────────────────────────────────────
+variable "unsplash_access_key" {
+  description = "Unsplash Access Key (shared across apps that fetch stock images)"
+  type        = string
+  sensitive   = true
+}
+
+variable "gemini_api_key" {
+  description = "Gemini API key (shared across apps; consumers pass it through their Cloud Run env)"
+  type        = string
+  sensitive   = true
+}
