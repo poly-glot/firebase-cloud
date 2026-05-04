@@ -276,3 +276,49 @@ output "shehryar_api_url" {
   description = "shehryar Cloud Run API URL"
   value       = module.apps.shehryar_api_url
 }
+
+# ── mocktail ────────────────────────────────────────────────
+output "mocktail_wif_provider" {
+  description = "WIF_PROVIDER for mocktail repo GitHub secrets"
+  value       = module.apps.mocktail_wif_provider
+}
+
+output "mocktail_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for mocktail repo GitHub secrets"
+  value       = module.apps.mocktail_gcp_sa_email
+}
+
+output "mocktail_runtime_sa_email" {
+  description = "mocktail runtime service account"
+  value       = module.apps.mocktail_runtime_sa_email
+}
+
+output "mocktail_cloud_run_url" {
+  description = "mocktail (Zig collab) Cloud Run URL"
+  value       = module.apps.mocktail_cloud_run_url
+}
+
+output "mocktail_email_auth_url" {
+  description = "mocktail-email-auth (Deno) Cloud Run URL"
+  value       = module.apps.mocktail_email_auth_url
+}
+
+output "mocktail_hosting_url" {
+  description = "mocktail Firebase Hosting URL"
+  value       = module.apps.mocktail_hosting_url
+}
+
+output "mocktail_firestore_db" {
+  description = "mocktail Firestore database name"
+  value       = module.apps.mocktail_firestore_db
+}
+
+output "mocktail_custom_domain" {
+  description = "mocktail custom domain"
+  value       = module.apps.mocktail_custom_domain
+}
+
+output "mocktail_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the mocktail custom domain"
+  value       = module.apps.mocktail_required_dns
+}
