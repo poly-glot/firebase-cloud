@@ -6,3 +6,7 @@ project_id = "your-gcp-project-id"   # e.g. "my-firebase-cloud"
 region     = "us-central1"
 github_org = "your-github-username"  # e.g. "junaidahmed"
 ar_repo    = "firebase-cloud"        # shared Artifact Registry repo ID
+
+# Shared (mocktail today; reusable for future apps).
+unsplash_access_key = "REPLACE_ME"
+gemini_api_key      = "REPLACE_ME_OR_LEAVE_BLANK_WHILE_DISABLED"
