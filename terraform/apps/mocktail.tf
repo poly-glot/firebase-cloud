@@ -41,7 +41,10 @@ module "mocktail_firestore" {
 module "mocktail_hosting" {
   source     = "../modules/hosting"
   project_id = var.project_id
-  site_id    = "mocktail"
+  # `mocktail` is reserved globally by Firebase; the suggested suffix from
+  # the API is `mocktail-fd0ff`. The custom domain (mocktail.junaid.guru)
+  # is unaffected — site_id is just the internal Firebase Hosting handle.
+  site_id = "mocktail-fd0ff"
 }
 
 resource "google_firebase_hosting_custom_domain" "mocktail" {
@@ -59,7 +62,7 @@ module "mocktail_email_auth_cloud_run" {
   region                = var.region
   service_name          = "mocktail-email-auth"
   service_account_email = module.mocktail_identity.runtime_sa_email
-  image                 = "${var.region}-docker.pkg.dev/${var.project_id}/firebase-cloud/mocktail-email-auth:latest"
+  image                 = "gcr.io/cloudrun/hello"
   health_path           = "/healthz"
 
   env_vars = {
@@ -103,10 +106,10 @@ resource "google_cloud_run_v2_service" "mocktail" {
     execution_environment = "EXECUTION_ENVIRONMENT_GEN2"
 
     containers {
-      image = "${var.region}-docker.pkg.dev/${var.project_id}/firebase-cloud/mocktail:latest"
+      image = "gcr.io/cloudrun/hello"
 
       resources {
-        limits   = { cpu = "1", memory = "256Mi" }
+        limits   = { cpu = "1", memory = "512Mi" }
         cpu_idle = false # CORRECTNESS: --no-cpu-throttling.
         # 1s epoll tick + self-kill timer require CPU between WS frames.
         startup_cpu_boost = true
