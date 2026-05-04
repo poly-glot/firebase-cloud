@@ -55,7 +55,7 @@ module "amazing_landing_cloud_run" {
     DATASTORE_DB        = "amazing-landing"
     ENVIRONMENT         = "production"
     SEED_DATA           = "true"
-    DEMO_MODE           = "false"
+    DEMO_MODE           = "true"
     ADMIN_EMAIL         = "admin@azadi.com"
     ENCRYPTION_KEY      = var.amazing_landing_encryption_key
     ADMIN_PASSWORD_HASH = var.amazing_landing_admin_password_hash
