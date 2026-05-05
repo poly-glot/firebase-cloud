@@ -124,6 +124,10 @@ resource "google_cloud_run_v2_service" "mocktail" {
         value = "true"
       }
       env {
+        name  = "FIRESTORE_PROJECT_ID"
+        value = var.project_id
+      }
+      env {
         name  = "FIRESTORE_DB"
         value = "mocktail"
       }
