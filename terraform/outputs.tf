@@ -322,3 +322,34 @@ output "mocktail_required_dns" {
   description = "DNS records required at the registrar to verify and serve the mocktail custom domain"
   value       = module.apps.mocktail_required_dns
 }
+
+# ── personal-site-2026 ──────────────────────────────────────
+output "personal_site_2026_wif_provider" {
+  description = "WIF_PROVIDER for personal-site-2026 repo GitHub secrets"
+  value       = module.apps.personal_site_2026_wif_provider
+}
+
+output "personal_site_2026_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for personal-site-2026 repo GitHub secrets"
+  value       = module.apps.personal_site_2026_gcp_sa_email
+}
+
+output "personal_site_2026_cloud_run_url" {
+  description = "personal-site-2026 Cloud Run URL"
+  value       = module.apps.personal_site_2026_cloud_run_url
+}
+
+output "personal_site_2026_hosting_url" {
+  description = "personal-site-2026 Firebase Hosting URL"
+  value       = module.apps.personal_site_2026_hosting_url
+}
+
+output "personal_site_2026_custom_domains" {
+  description = "personal-site-2026 custom domains (apex serves, www redirects)"
+  value       = module.apps.personal_site_2026_custom_domains
+}
+
+output "personal_site_2026_required_dns" {
+  description = "DNS records to add at the registrar for junaid.guru and www.junaid.guru"
+  value       = module.apps.personal_site_2026_required_dns
+}
