@@ -310,3 +310,40 @@ output "mocktail_required_dns" {
   description = "DNS records required at the registrar to verify and serve the custom domain"
   value       = google_firebase_hosting_custom_domain.mocktail.required_dns_updates
 }
+
+# ── Personal Site 2026 Outputs ──────────────────────────────
+output "personal_site_2026_wif_provider" {
+  description = "WIF_PROVIDER for personal-site-2026 repo GitHub secrets"
+  value       = module.personal_site_identity.wif_provider
+}
+
+output "personal_site_2026_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for personal-site-2026 repo GitHub secrets"
+  value       = module.personal_site_identity.ci_cd_sa_email
+}
+
+output "personal_site_2026_cloud_run_url" {
+  description = "Cloud Run service URL"
+  value       = module.personal_site_cloud_run.service_url
+}
+
+output "personal_site_2026_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.personal_site_hosting.site_url
+}
+
+output "personal_site_2026_custom_domains" {
+  description = "Custom domains for personal-site-2026 (apex serves, www redirects)"
+  value = {
+    apex = google_firebase_hosting_custom_domain.personal_site_apex.custom_domain
+    www  = google_firebase_hosting_custom_domain.personal_site_www.custom_domain
+  }
+}
+
+output "personal_site_2026_required_dns" {
+  description = "DNS records to add at the registrar for junaid.guru and www.junaid.guru"
+  value = {
+    apex = google_firebase_hosting_custom_domain.personal_site_apex.required_dns_updates
+    www  = google_firebase_hosting_custom_domain.personal_site_www.required_dns_updates
+  }
+}
