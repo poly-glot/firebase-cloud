@@ -55,6 +55,22 @@ variable "health_path" {
   default     = "/api/health"
 }
 
+variable "startup_probe" {
+  description = "Startup-probe schedule. Defaults preserve the original behaviour; override per-app to tune cold-start readiness."
+  type = object({
+    initial_delay_seconds = number
+    period_seconds        = number
+    failure_threshold     = number
+    timeout_seconds       = number
+  })
+  default = {
+    initial_delay_seconds = 5
+    period_seconds        = 10
+    failure_threshold     = 3
+    timeout_seconds       = 3
+  }
+}
+
 variable "allow_unauthenticated" {
   description = "Allow public access to the service"
   type        = bool

@@ -46,6 +46,17 @@ module "personal_site_cloud_run" {
   max_instances = 1
   health_path   = "/"
 
+  # The compiled Deno binary is serving in ~1.7s, yet the module's default probe
+  # (initial_delay 5s, period 10s) holds the instance "not ready" for a fixed 5s,
+  # pinning every scale-from-zero request at ~5.1s. Probe from t=0 every 1s so a
+  # ready instance is picked up in ~1s; failure_threshold keeps a 10s boot budget.
+  startup_probe = {
+    initial_delay_seconds = 0
+    period_seconds        = 1
+    failure_threshold     = 10
+    timeout_seconds       = 1
+  }
+
   depends_on = [module.personal_site_identity]
 }
 
