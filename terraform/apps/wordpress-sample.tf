@@ -165,3 +165,18 @@ resource "google_cloud_run_v2_service_iam_member" "wordpress_sample_public" {
   role     = "roles/run.invoker"
   member   = "allUsers"
 }
+
+resource "google_cloud_scheduler_job" "wordpress_sample_cron" {
+  project          = var.project_id
+  region           = var.region
+  name             = "wordpress-sample-cron"
+  description      = "Hourly WordPress cron for wordpress-sample"
+  schedule         = "0 * * * *"
+  time_zone        = "UTC"
+  attempt_deadline = "180s"
+
+  http_target {
+    uri         = "${google_cloud_run_v2_service.wordpress_sample.uri}/wp-cron.php?doing_wp_cron"
+    http_method = "GET"
+  }
+}
