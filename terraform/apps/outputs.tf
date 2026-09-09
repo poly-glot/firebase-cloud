@@ -347,3 +347,18 @@ output "personal_site_2026_required_dns" {
     www  = google_firebase_hosting_custom_domain.personal_site_www.required_dns_updates
   }
 }
+
+output "wordpress_sample_wif_provider" {
+  description = "WIF_PROVIDER for wordpress-sample repo GitHub secrets"
+  value       = module.wordpress_sample_identity.wif_provider
+}
+
+output "wordpress_sample_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for wordpress-sample repo GitHub secrets"
+  value       = module.wordpress_sample_identity.ci_cd_sa_email
+}
+
+output "wordpress_sample_cloud_run_url" {
+  description = "Cloud Run URL for wordpress-sample"
+  value       = google_cloud_run_v2_service.wordpress_sample.uri
+}

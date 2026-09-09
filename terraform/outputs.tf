@@ -353,3 +353,18 @@ output "personal_site_2026_required_dns" {
   description = "DNS records to add at the registrar for junaid.guru and www.junaid.guru"
   value       = module.apps.personal_site_2026_required_dns
 }
+
+output "wordpress_sample_wif_provider" {
+  description = "WIF_PROVIDER for wordpress-sample repo GitHub secrets"
+  value       = module.apps.wordpress_sample_wif_provider
+}
+
+output "wordpress_sample_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for wordpress-sample repo GitHub secrets"
+  value       = module.apps.wordpress_sample_gcp_sa_email
+}
+
+output "wordpress_sample_cloud_run_url" {
+  description = "wordpress-sample Cloud Run URL"
+  value       = module.apps.wordpress_sample_cloud_run_url
+}
