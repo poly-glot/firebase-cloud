@@ -140,6 +140,11 @@ resource "google_cloud_run_v2_service" "wordpress_sample" {
         }
       }
 
+      env {
+        name  = "GCS_UPLOADS_BUCKET"
+        value = google_storage_bucket.wordpress_sample_uploads.name
+      }
+
       startup_probe {
         http_get {
           path = "/"
@@ -148,20 +153,6 @@ resource "google_cloud_run_v2_service" "wordpress_sample" {
         period_seconds        = 2
         failure_threshold     = 15
         timeout_seconds       = 2
-      }
-
-      volume_mounts {
-        mount_path = "/app/public/wp-content/uploads"
-        name       = "uploads"
-      }
-    }
-
-    volumes {
-      name = "uploads"
-
-      gcs {
-        bucket    = google_storage_bucket.wordpress_sample_uploads.name
-        read_only = false
       }
     }
 
