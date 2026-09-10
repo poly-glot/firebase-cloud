@@ -65,6 +65,12 @@ resource "google_storage_bucket_iam_member" "wordpress_sample_uploads_object_adm
   member = "serviceAccount:${module.wordpress_sample_identity.runtime_sa_email}"
 }
 
+resource "google_storage_bucket_iam_member" "wordpress_sample_uploads_public_read" {
+  bucket = google_storage_bucket.wordpress_sample_uploads.name
+  member = "allUsers"
+  role   = "roles/storage.objectViewer"
+}
+
 resource "google_cloud_run_v2_service" "wordpress_sample" {
   provider = google-beta
   project  = var.project_id
