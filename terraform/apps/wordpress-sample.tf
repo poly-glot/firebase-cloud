@@ -51,6 +51,20 @@ resource "google_secret_manager_secret_iam_member" "wordpress_sample_ci_db_read"
   depends_on = [module.wordpress_sample_db]
 }
 
+resource "google_storage_bucket" "wordpress_sample_uploads" {
+  project                     = var.project_id
+  name                        = "${var.project_id}-wordpress-sample-uploads"
+  location                    = var.region
+  uniform_bucket_level_access = true
+  force_destroy               = true
+}
+
+resource "google_storage_bucket_iam_member" "wordpress_sample_uploads_object_admin" {
+  bucket = google_storage_bucket.wordpress_sample_uploads.name
+  role   = "roles/storage.objectAdmin"
+  member = "serviceAccount:${module.wordpress_sample_identity.runtime_sa_email}"
+}
+
 resource "google_cloud_run_v2_service" "wordpress_sample" {
   provider = google-beta
   project  = var.project_id
@@ -134,6 +148,20 @@ resource "google_cloud_run_v2_service" "wordpress_sample" {
         period_seconds        = 2
         failure_threshold     = 15
         timeout_seconds       = 2
+      }
+
+      volume_mounts {
+        mount_path = "/app/public/wp-content/uploads"
+        name       = "uploads"
+      }
+    }
+
+    volumes {
+      name = "uploads"
+
+      gcs {
+        bucket    = google_storage_bucket.wordpress_sample_uploads.name
+        read_only = false
       }
     }
 
