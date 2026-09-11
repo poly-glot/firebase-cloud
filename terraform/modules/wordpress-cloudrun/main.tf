@@ -178,16 +178,6 @@ resource "google_cloud_run_v2_service" "this" {
           }
         }
       }
-
-      startup_probe {
-        http_get {
-          path = "/"
-        }
-        initial_delay_seconds = 0
-        period_seconds        = 2
-        failure_threshold     = 15
-        timeout_seconds       = 2
-      }
     }
 
     timeout               = "300s"
