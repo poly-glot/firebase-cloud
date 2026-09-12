@@ -93,3 +93,9 @@ variable "extra_env" {
   type        = map(string)
   default     = {}
 }
+
+variable "startup_probe_path" {
+  description = "PHP-served path polled every second until it answers; a TCP probe passes while FrankenPHP can still swallow the first request"
+  type        = string
+  default     = "/wp-includes/version.php"
+}

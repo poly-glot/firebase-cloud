@@ -121,6 +121,16 @@ resource "google_cloud_run_v2_service" "this" {
         startup_cpu_boost = true
       }
 
+      startup_probe {
+        http_get {
+          path = var.startup_probe_path
+          port = 8080
+        }
+        period_seconds    = 1
+        timeout_seconds   = 1
+        failure_threshold = 60
+      }
+
       env {
         name  = "DB_SSL"
         value = "1"
