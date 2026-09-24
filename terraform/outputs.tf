@@ -368,3 +368,33 @@ output "wordpress_sample_cloud_run_url" {
   description = "wordpress-sample Cloud Run URL"
   value       = module.apps.wordpress_sample_cloud_run_url
 }
+
+output "careerpost_wif_provider" {
+  description = "WIF_PROVIDER for careerpost repo GitHub secrets"
+  value       = module.apps.careerpost_wif_provider
+}
+
+output "careerpost_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for careerpost repo GitHub secrets"
+  value       = module.apps.careerpost_gcp_sa_email
+}
+
+output "careerpost_hosting_url" {
+  description = "careerpost Firebase Hosting URL"
+  value       = module.apps.careerpost_hosting_url
+}
+
+output "careerpost_custom_domain" {
+  description = "careerpost custom domain"
+  value       = module.apps.careerpost_custom_domain
+}
+
+output "careerpost_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the careerpost custom domain"
+  value       = module.apps.careerpost_required_dns
+}
+
+output "careerpost_cloud_run_url" {
+  description = "careerpost Cloud Run URL"
+  value       = module.apps.careerpost_cloud_run_url
+}
