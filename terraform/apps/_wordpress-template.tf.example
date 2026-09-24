@@ -1,0 +1,38 @@
+# ─────────────────────────────────────────────────────────────
+# Template: onboard a new WordPress site on Cloud Run
+# ─────────────────────────────────────────────────────────────
+# 1. Copy this file to apps/<app-name>.tf and drop the .example
+# 2. Replace "myblog" with your app name and set github_repo + database_name
+# 3. Add the catalog entry in apps/mysql-catalog.tf:
+#        "myblog" = module.myblog.db_app_entry
+# 4. Add the outputs in apps/outputs.tf (see the four below)
+# 5. terraform plan / apply, then run the wordpress-cloudrun skill for the
+#    app repo, DB provisioning, GitHub secrets, and first install.
+# ─────────────────────────────────────────────────────────────
+
+# module "myblog" {
+#   source = "../modules/wordpress-cloudrun"
+#
+#   project_id    = var.project_id
+#   region        = var.region
+#   app_name      = "myblog"
+#   github_org    = var.github_org
+#   github_repo   = "myblog"
+#   database_name = "myblog"
+#   wif_pool_id   = var.wif_pool_id
+#   wif_pool_name = var.wif_pool_name
+#
+#   # Optional overrides (defaults shown):
+#   # cpu            = "1"
+#   # memory         = "1Gi"
+#   # max_instances  = 1
+#   # concurrency    = 8
+#   # cron_schedule  = "0 * * * *"
+#   # public_uploads = true
+#   # extra_env      = { WP_DEFAULT_THEME = "twentytwentyfive" }
+# }
+
+# output "myblog_wif_provider"   { value = module.myblog.wif_provider }
+# output "myblog_gcp_sa_email"   { value = module.myblog.ci_cd_sa_email }
+# output "myblog_cloud_run_url"  { value = module.myblog.service_url }
+# output "myblog_uploads_bucket" { value = module.myblog.uploads_bucket }

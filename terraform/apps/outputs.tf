@@ -347,3 +347,48 @@ output "personal_site_2026_required_dns" {
     www  = google_firebase_hosting_custom_domain.personal_site_www.required_dns_updates
   }
 }
+
+output "wordpress_sample_wif_provider" {
+  description = "WIF_PROVIDER for wordpress-sample repo GitHub secrets"
+  value       = module.wordpress_sample_identity.wif_provider
+}
+
+output "wordpress_sample_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for wordpress-sample repo GitHub secrets"
+  value       = module.wordpress_sample_identity.ci_cd_sa_email
+}
+
+output "wordpress_sample_cloud_run_url" {
+  description = "Cloud Run URL for wordpress-sample"
+  value       = google_cloud_run_v2_service.wordpress_sample.uri
+}
+
+output "careerpost_wif_provider" {
+  description = "WIF_PROVIDER for careerpost repo GitHub secrets"
+  value       = module.careerpost_identity.wif_provider
+}
+
+output "careerpost_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for careerpost repo GitHub secrets"
+  value       = module.careerpost_identity.ci_cd_sa_email
+}
+
+output "careerpost_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.careerpost_hosting.site_url
+}
+
+output "careerpost_custom_domain" {
+  description = "Custom domain for careerpost"
+  value       = google_firebase_hosting_custom_domain.careerpost.custom_domain
+}
+
+output "careerpost_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.careerpost.required_dns_updates
+}
+
+output "careerpost_cloud_run_url" {
+  description = "Cloud Run URL for the careerpost PHP backend"
+  value       = google_cloud_run_v2_service.careerpost.uri
+}
