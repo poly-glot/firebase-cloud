@@ -392,3 +392,38 @@ output "careerpost_cloud_run_url" {
   description = "Cloud Run URL for the careerpost PHP backend"
   value       = google_cloud_run_v2_service.careerpost.uri
 }
+
+output "photobank_wif_provider" {
+  description = "WIF_PROVIDER for photobank repo GitHub secrets"
+  value       = module.photobank_identity.wif_provider
+}
+
+output "photobank_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for photobank repo GitHub secrets"
+  value       = module.photobank_identity.ci_cd_sa_email
+}
+
+output "photobank_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.photobank_hosting.site_url
+}
+
+output "photobank_custom_domain" {
+  description = "Custom domain for photobank"
+  value       = google_firebase_hosting_custom_domain.photobank.custom_domain
+}
+
+output "photobank_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.photobank.required_dns_updates
+}
+
+output "photobank_cloud_run_url" {
+  description = "Cloud Run URL for the photobank PHP backend"
+  value       = google_cloud_run_v2_service.photobank.uri
+}
+
+output "photobank_uploads_bucket" {
+  description = "Bucket mounted at /var/www/html/uploads"
+  value       = google_storage_bucket.photobank_uploads.name
+}
