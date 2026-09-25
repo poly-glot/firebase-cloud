@@ -41,7 +41,7 @@ module "photobank_hosting" {
   source = "../modules/hosting"
 
   project_id = var.project_id
-  site_id    = "photobank"
+  site_id    = "photobank-junaid"
 }
 
 resource "google_firebase_hosting_custom_domain" "photobank" {
