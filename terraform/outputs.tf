@@ -398,3 +398,38 @@ output "careerpost_cloud_run_url" {
   description = "careerpost Cloud Run URL"
   value       = module.apps.careerpost_cloud_run_url
 }
+
+output "photobank_wif_provider" {
+  description = "WIF_PROVIDER for photobank repo GitHub secrets"
+  value       = module.apps.photobank_wif_provider
+}
+
+output "photobank_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for photobank repo GitHub secrets"
+  value       = module.apps.photobank_gcp_sa_email
+}
+
+output "photobank_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.apps.photobank_hosting_url
+}
+
+output "photobank_custom_domain" {
+  description = "Custom domain for photobank"
+  value       = module.apps.photobank_custom_domain
+}
+
+output "photobank_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = module.apps.photobank_required_dns
+}
+
+output "photobank_cloud_run_url" {
+  description = "Cloud Run URL for the photobank PHP backend"
+  value       = module.apps.photobank_cloud_run_url
+}
+
+output "photobank_uploads_bucket" {
+  description = "Bucket mounted at /var/www/html/uploads"
+  value       = module.apps.photobank_uploads_bucket
+}
