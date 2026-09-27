@@ -427,3 +427,24 @@ output "photobank_uploads_bucket" {
   description = "Bucket mounted at /var/www/html/uploads"
   value       = google_storage_bucket.photobank_uploads.name
 }
+
+# ── Parley Outputs ──────────────────────────────────────────
+output "parley_wif_provider" {
+  description = "WIF_PROVIDER for parley repo GitHub secrets"
+  value       = module.parley.wif_provider
+}
+
+output "parley_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for parley repo GitHub secrets"
+  value       = module.parley.ci_cd_sa_email
+}
+
+output "parley_cloud_run_url" {
+  description = "Cloud Run URL for parley"
+  value       = module.parley.service_url
+}
+
+output "parley_uploads_bucket" {
+  description = "GCS bucket holding parley media uploads"
+  value       = module.parley.uploads_bucket
+}

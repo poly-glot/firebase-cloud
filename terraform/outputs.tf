@@ -433,3 +433,23 @@ output "photobank_uploads_bucket" {
   description = "Bucket mounted at /var/www/html/uploads"
   value       = module.apps.photobank_uploads_bucket
 }
+
+output "parley_wif_provider" {
+  description = "WIF_PROVIDER for parley repo GitHub secrets"
+  value       = module.apps.parley_wif_provider
+}
+
+output "parley_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for parley repo GitHub secrets"
+  value       = module.apps.parley_gcp_sa_email
+}
+
+output "parley_cloud_run_url" {
+  description = "Cloud Run URL for parley"
+  value       = module.apps.parley_cloud_run_url
+}
+
+output "parley_uploads_bucket" {
+  description = "GCS bucket holding parley media uploads"
+  value       = module.apps.parley_uploads_bucket
+}
