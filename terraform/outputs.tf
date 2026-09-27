@@ -483,3 +483,38 @@ output "parley_required_dns" {
   description = "DNS records required at the registrar to verify and serve the custom domain"
   value       = module.apps.parley_required_dns
 }
+
+output "legal_wif_provider" {
+  description = "WIF_PROVIDER for legal repo GitHub secrets"
+  value       = module.apps.legal_wif_provider
+}
+
+output "legal_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for legal repo GitHub secrets"
+  value       = module.apps.legal_gcp_sa_email
+}
+
+output "legal_cloud_run_url" {
+  description = "Cloud Run URL for legal"
+  value       = module.apps.legal_cloud_run_url
+}
+
+output "legal_uploads_bucket" {
+  description = "GCS bucket holding legal media uploads"
+  value       = module.apps.legal_uploads_bucket
+}
+
+output "legal_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.apps.legal_hosting_url
+}
+
+output "legal_custom_domain" {
+  description = "Custom domain for legal"
+  value       = module.apps.legal_custom_domain
+}
+
+output "legal_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = module.apps.legal_required_dns
+}

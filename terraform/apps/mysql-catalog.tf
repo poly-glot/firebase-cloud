@@ -10,6 +10,7 @@
 locals {
   mysql_apps = {
     careerpost         = module.careerpost_db.app_entry
+    legal              = module.legal.db_app_entry
     parley             = module.parley.db_app_entry
     photobank          = module.photobank_db.app_entry
     shehryar           = module.shehryar_db.app_entry
