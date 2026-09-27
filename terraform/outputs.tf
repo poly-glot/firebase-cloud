@@ -453,3 +453,18 @@ output "parley_uploads_bucket" {
   description = "GCS bucket holding parley media uploads"
   value       = module.apps.parley_uploads_bucket
 }
+
+output "outrun_wif_provider" {
+  description = "WIF_PROVIDER for outrun repo GitHub secrets"
+  value       = module.apps.outrun_wif_provider
+}
+
+output "outrun_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for outrun repo GitHub secrets"
+  value       = module.apps.outrun_gcp_sa_email
+}
+
+output "outrun_hosting_url" {
+  description = "Firebase Hosting URL for outrun"
+  value       = module.apps.outrun_hosting_url
+}
