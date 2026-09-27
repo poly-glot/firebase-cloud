@@ -468,3 +468,18 @@ output "outrun_hosting_url" {
   description = "Firebase Hosting URL for outrun"
   value       = module.apps.outrun_hosting_url
 }
+
+output "parley_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.apps.parley_hosting_url
+}
+
+output "parley_custom_domain" {
+  description = "Custom domain for parley"
+  value       = module.apps.parley_custom_domain
+}
+
+output "parley_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = module.apps.parley_required_dns
+}
