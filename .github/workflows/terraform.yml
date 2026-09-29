@@ -54,7 +54,8 @@ jobs:
       - name: Terraform Plan
         id: plan
         working-directory: ${{ env.TF_DIR }}
-        run: terraform plan -no-color -input=false -out=tfplan
+        shell: bash
+        run: terraform plan -no-color -input=false -out=tfplan 2>&1 | tee plan.txt
         continue-on-error: true
         env:
           TF_VAR_resend_api_key: ${{ secrets.RESEND_API_KEY }}
@@ -74,12 +75,24 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const fs = require('fs');
+
+            const planPath = '${{ env.TF_DIR }}/plan.txt';
+            const commentLimit = 60000;
+
+            const plan = fs.existsSync(planPath) ? fs.readFileSync(planPath, 'utf8') : 'No plan output captured.';
+            const isTruncated = plan.length > commentLimit;
+            const shownPlan = isTruncated ? plan.slice(-commentLimit) : plan;
+            const truncationNote = isTruncated ? 'Plan truncated to its last 60000 characters; see the workflow log for the full output.' : '';
+
             const output = `#### Terraform Plan \`${{ steps.plan.outcome }}\`
+
+            ${truncationNote}
 
             <details><summary>Show Plan</summary>
 
             \`\`\`
-            ${{ steps.plan.outputs.stdout }}
+            ${shownPlan}
             \`\`\`
 
             </details>
