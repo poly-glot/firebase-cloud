@@ -515,3 +515,41 @@ output "legal_required_dns" {
   description = "DNS records required at the registrar to verify and serve the custom domain"
   value       = google_firebase_hosting_custom_domain.legal.required_dns_updates
 }
+
+# ─────────────────────────────────────────────────────────────
+# cms Outputs
+# ─────────────────────────────────────────────────────────────
+output "cms_wif_provider" {
+  description = "WIF_PROVIDER for the cms repo GitHub secrets"
+  value       = module.cms_identity.wif_provider
+}
+
+output "cms_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for the cms repo GitHub secrets"
+  value       = module.cms_identity.ci_cd_sa_email
+}
+
+output "cms_cloud_run_url" {
+  description = "Cloud Run service URL for cms"
+  value       = google_cloud_run_v2_service.cms.uri
+}
+
+output "cms_uploads_bucket" {
+  description = "GCS bucket holding cms media uploads"
+  value       = google_storage_bucket.cms_uploads.name
+}
+
+output "cms_hosting_url" {
+  description = "Firebase Hosting default URL for cms"
+  value       = "https://${google_firebase_hosting_site.cms.site_id}.web.app"
+}
+
+output "cms_custom_domain" {
+  description = "Custom domain for cms"
+  value       = google_firebase_hosting_custom_domain.cms.custom_domain
+}
+
+output "cms_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.cms.required_dns_updates
+}
