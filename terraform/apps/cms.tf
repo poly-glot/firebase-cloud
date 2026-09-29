@@ -2,14 +2,16 @@
 # cms — CakePHP 5 CMS on Cloud Run + OCI HeatWave MySQL + GCS uploads
 # ─────────────────────────────────────────────────────────────
 # Firebase Hosting fronts cms.junaid.guru and rewrites every path to
-# the Cloud Run service. The uploads bucket is mounted into the
-# container at /app/storage/uploads via GCS FUSE; a public/ prefix
-# on the bucket is world-readable so BlockExpander can emit direct
-# storage.googleapis.com URLs and skip the PHP stream.
+# the Cloud Run service. Two buckets are mounted via GCS FUSE:
+# originals in a private bucket at /app/storage/uploads/private, and
+# renditions in a world-readable bucket at /app/storage/uploads/public
+# so BlockExpander can emit direct storage.googleapis.com URLs. GCS
+# rejects IAM conditions on allUsers, so public access is per bucket.
 # ─────────────────────────────────────────────────────────────
 
 locals {
   cms_uploads_bucket = "${var.project_id}-cms-uploads"
+  cms_media_bucket   = "${var.project_id}-cms-media"
 
   cms_ci_db_secrets = [
     "db-host",
@@ -71,6 +73,20 @@ resource "google_storage_bucket" "cms_uploads" {
   location                    = var.region
   uniform_bucket_level_access = true
   force_destroy               = false
+}
+
+resource "google_storage_bucket_iam_member" "cms_uploads_runtime_admin" {
+  bucket = google_storage_bucket.cms_uploads.name
+  role   = "roles/storage.objectAdmin"
+  member = "serviceAccount:${module.cms_identity.runtime_sa_email}"
+}
+
+resource "google_storage_bucket" "cms_media" {
+  project                     = var.project_id
+  name                        = local.cms_media_bucket
+  location                    = var.region
+  uniform_bucket_level_access = true
+  force_destroy               = false
 
   cors {
     origin          = ["https://cms.junaid.guru"]
@@ -80,21 +96,16 @@ resource "google_storage_bucket" "cms_uploads" {
   }
 }
 
-resource "google_storage_bucket_iam_member" "cms_uploads_runtime_admin" {
-  bucket = google_storage_bucket.cms_uploads.name
+resource "google_storage_bucket_iam_member" "cms_media_runtime_admin" {
+  bucket = google_storage_bucket.cms_media.name
   role   = "roles/storage.objectAdmin"
   member = "serviceAccount:${module.cms_identity.runtime_sa_email}"
 }
 
-resource "google_storage_bucket_iam_member" "cms_uploads_public_prefix" {
-  bucket = google_storage_bucket.cms_uploads.name
+resource "google_storage_bucket_iam_member" "cms_media_public_read" {
+  bucket = google_storage_bucket.cms_media.name
   role   = "roles/storage.objectViewer"
   member = "allUsers"
-
-  condition {
-    title      = "public-prefix-only"
-    expression = "resource.name.startsWith(\"projects/_/buckets/${google_storage_bucket.cms_uploads.name}/objects/public/\")"
-  }
 }
 
 resource "google_cloud_run_v2_service" "cms" {
@@ -116,9 +127,17 @@ resource "google_cloud_run_v2_service" "cms" {
     }
 
     volumes {
-      name = "uploads"
+      name = "uploads-private"
       gcs {
         bucket    = google_storage_bucket.cms_uploads.name
+        read_only = false
+      }
+    }
+
+    volumes {
+      name = "uploads-public"
+      gcs {
+        bucket    = google_storage_bucket.cms_media.name
         read_only = false
       }
     }
@@ -136,8 +155,13 @@ resource "google_cloud_run_v2_service" "cms" {
       }
 
       volume_mounts {
-        name       = "uploads"
-        mount_path = "/app/storage/uploads"
+        name       = "uploads-private"
+        mount_path = "/app/storage/uploads/private"
+      }
+
+      volume_mounts {
+        name       = "uploads-public"
+        mount_path = "/app/storage/uploads/public"
       }
 
       startup_probe {
@@ -169,7 +193,7 @@ resource "google_cloud_run_v2_service" "cms" {
 
       env {
         name  = "MEDIA_PUBLIC_BASE"
-        value = "https://storage.googleapis.com/${google_storage_bucket.cms_uploads.name}"
+        value = "https://storage.googleapis.com/${google_storage_bucket.cms_media.name}"
       }
 
       env {
