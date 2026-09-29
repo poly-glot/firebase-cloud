@@ -535,8 +535,13 @@ output "cms_cloud_run_url" {
 }
 
 output "cms_uploads_bucket" {
-  description = "GCS bucket holding cms media uploads"
+  description = "Private GCS bucket holding cms original uploads"
   value       = google_storage_bucket.cms_uploads.name
+}
+
+output "cms_media_bucket" {
+  description = "Public GCS bucket holding cms renditions"
+  value       = google_storage_bucket.cms_media.name
 }
 
 output "cms_hosting_url" {
