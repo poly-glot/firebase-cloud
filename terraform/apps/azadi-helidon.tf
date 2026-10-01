@@ -35,6 +35,15 @@ module "azadi_helidon_hosting" {
   site_id    = "azadi-helidon"
 }
 
+resource "google_firebase_hosting_custom_domain" "azadi_helidon" {
+  provider      = google-beta
+  project       = var.project_id
+  site_id       = module.azadi_helidon_hosting.site_id
+  custom_domain = "azadi-helidon.junaid.guru"
+
+  wait_dns_verification = false
+}
+
 # ── Secrets (shells only; values added with `gcloud secrets versions add`) ──
 
 locals {
