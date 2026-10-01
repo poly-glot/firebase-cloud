@@ -49,6 +49,18 @@ variable "env_vars" {
   default = {}
 }
 
+variable "secret_env_vars" {
+  description = "Environment variables sourced from Secret Manager: env name => secret_id (latest version)"
+  type        = map(string)
+  default     = {}
+}
+
+variable "session_affinity" {
+  description = "Route a client's requests to the same instance (for in-memory sessions)"
+  type        = bool
+  default     = false
+}
+
 variable "health_path" {
   description = "HTTP path for startup/liveness probes"
   type        = string

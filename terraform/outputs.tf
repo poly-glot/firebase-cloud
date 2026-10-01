@@ -101,6 +101,32 @@ output "azadi_go_firestore_db" {
   value       = module.apps.azadi_go_firestore_db
 }
 
+# ── Azadi Helidon ───────────────────────────────────────────
+output "azadi_helidon_wif_provider" {
+  description = "WIF_PROVIDER for azadi-helidon repo GitHub secrets"
+  value       = module.apps.azadi_helidon_wif_provider
+}
+
+output "azadi_helidon_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for azadi-helidon repo GitHub secrets"
+  value       = module.apps.azadi_helidon_gcp_sa_email
+}
+
+output "azadi_helidon_cloud_run_url" {
+  description = "Azadi Helidon Cloud Run service URL"
+  value       = module.apps.azadi_helidon_cloud_run_url
+}
+
+output "azadi_helidon_hosting_url" {
+  description = "Azadi Helidon Firebase Hosting URL"
+  value       = module.apps.azadi_helidon_hosting_url
+}
+
+output "azadi_helidon_firestore_db" {
+  description = "Azadi Helidon Firestore database name"
+  value       = module.apps.azadi_helidon_firestore_db
+}
+
 # ── Amazing Landing ─────────────────────────────────────────
 output "amazing_landing_wif_provider" {
   description = "WIF_PROVIDER for amazing-landing repo GitHub secrets"

@@ -11,7 +11,8 @@ resource "google_cloud_run_v2_service" "default" {
   deletion_protection = false
 
   template {
-    service_account = var.service_account_email
+    service_account  = var.service_account_email
+    session_affinity = var.session_affinity
 
     scaling {
       min_instance_count = var.min_instances
@@ -35,6 +36,19 @@ resource "google_cloud_run_v2_service" "default" {
         content {
           name  = env.key
           value = env.value
+        }
+      }
+
+      dynamic "env" {
+        for_each = var.secret_env_vars
+        content {
+          name = env.key
+          value_source {
+            secret_key_ref {
+              secret  = env.value
+              version = "latest"
+            }
+          }
         }
       }
 
