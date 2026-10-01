@@ -516,6 +516,42 @@ output "parley_required_dns" {
   value       = google_firebase_hosting_custom_domain.parley.required_dns_updates
 }
 
+# ── Wealth Outputs ──────────────────────────────────────────
+output "wealth_wif_provider" {
+  description = "WIF_PROVIDER for wealth repo GitHub secrets"
+  value       = module.wealth.wif_provider
+}
+
+output "wealth_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for wealth repo GitHub secrets"
+  value       = module.wealth.ci_cd_sa_email
+}
+
+output "wealth_cloud_run_url" {
+  description = "Cloud Run URL for wealth"
+  value       = module.wealth.service_url
+}
+
+output "wealth_uploads_bucket" {
+  description = "GCS bucket holding wealth media uploads"
+  value       = module.wealth.uploads_bucket
+}
+
+output "wealth_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.wealth_hosting.site_url
+}
+
+output "wealth_custom_domain" {
+  description = "Custom domain for wealth"
+  value       = google_firebase_hosting_custom_domain.wealth.custom_domain
+}
+
+output "wealth_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.wealth.required_dns_updates
+}
+
 # ── Legal Outputs ───────────────────────────────────────────
 output "legal_wif_provider" {
   description = "WIF_PROVIDER for legal repo GitHub secrets"
