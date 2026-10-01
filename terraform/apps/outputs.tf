@@ -104,6 +104,16 @@ output "azadi_helidon_firestore_db" {
   value       = module.azadi_helidon_firestore.database_name
 }
 
+output "azadi_helidon_custom_domain" {
+  description = "Azadi Helidon custom domain"
+  value       = google_firebase_hosting_custom_domain.azadi_helidon.custom_domain
+}
+
+output "azadi_helidon_required_dns" {
+  description = "DNS records to add at Cloudflare for azadi-helidon.junaid.guru"
+  value       = google_firebase_hosting_custom_domain.azadi_helidon.required_dns_updates
+}
+
 # ── Amazing Landing Outputs ─────────────────────────────────
 output "amazing_landing_wif_provider" {
   description = "WIF_PROVIDER for amazing-landing repo GitHub secrets"
