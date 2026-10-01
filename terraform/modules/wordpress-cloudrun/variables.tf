@@ -71,9 +71,9 @@ variable "concurrency" {
 }
 
 variable "cron_schedule" {
-  description = "Cloud Scheduler cron for wp-cron.php; UTC"
+  description = "Cloud Scheduler cron for wp-cron.php; UTC. Every 15 minutes also keeps the single instance warm"
   type        = string
-  default     = "0 * * * *"
+  default     = "*/15 * * * *"
 }
 
 variable "public_uploads" {
