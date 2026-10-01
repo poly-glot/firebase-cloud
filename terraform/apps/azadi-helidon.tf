@@ -74,7 +74,7 @@ module "azadi_helidon_cloud_run" {
   region                = var.region
   service_name          = "azadi-helidon-api"
   service_account_email = module.azadi_helidon_identity.runtime_sa_email
-  memory                = "256Mi"
+  memory                = "512Mi"
   max_instances         = 1
   session_affinity      = true
   health_path           = "/actuator/health"
@@ -129,7 +129,7 @@ resource "google_cloud_run_v2_job" "azadi_helidon_migrate" {
         resources {
           limits = {
             cpu    = "1"
-            memory = "256Mi"
+            memory = "512Mi"
           }
         }
       }
