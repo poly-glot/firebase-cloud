@@ -2,6 +2,10 @@
 # Hooklab (webhook repo) — App Configuration
 # ─────────────────────────────────────────────────────────────
 
+locals {
+  hooklab_internal_audience = "https://hooklab.junaid.guru/api/internal"
+}
+
 # ── Identity: SA + WIF Provider ─────────────────────────────
 module "hooklab_identity" {
   source = "../modules/app-identity"
@@ -66,6 +70,9 @@ module "hooklab_cloud_run" {
     RESEND_API_KEY     = var.resend_api_key
     FROM_EMAIL         = "noreply@junaid.guru"
     APP_DOMAIN         = "hooklab.junaid.guru"
+
+    INTERNAL_OIDC_AUDIENCE   = local.hooklab_internal_audience
+    INTERNAL_SCHEDULER_EMAIL = module.hooklab_identity.runtime_sa_email
   }
 
   depends_on = [module.hooklab_identity]
@@ -83,11 +90,13 @@ module "hooklab_scheduler" {
     hooklab-cleanup = {
       schedule    = "0 3 * * *"
       uri         = "${module.hooklab_cloud_run.service_url}/api/internal/cleanup"
+      audience    = local.hooklab_internal_audience
       description = "Daily cleanup of old executions and quota reset"
     }
     hooklab-aggregate = {
       schedule    = "0 * * * *"
       uri         = "${module.hooklab_cloud_run.service_url}/api/internal/aggregate"
+      audience    = local.hooklab_internal_audience
       description = "Hourly analytics aggregation"
     }
   }

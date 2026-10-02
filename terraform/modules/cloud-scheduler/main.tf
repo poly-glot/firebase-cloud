@@ -19,7 +19,7 @@ resource "google_cloud_scheduler_job" "jobs" {
 
     oidc_token {
       service_account_email = var.service_account_email
-      audience              = each.value.uri
+      audience              = each.value.audience != "" ? each.value.audience : each.value.uri
     }
   }
 

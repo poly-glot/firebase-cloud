@@ -13,6 +13,7 @@ variable "jobs" {
   type = map(object({
     schedule    = string
     uri         = string
+    audience    = optional(string, "")
     http_method = optional(string, "POST")
     body        = optional(string, "")
     description = optional(string, "")
