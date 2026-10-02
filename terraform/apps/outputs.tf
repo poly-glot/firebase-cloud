@@ -552,6 +552,42 @@ output "wealth_required_dns" {
   value       = google_firebase_hosting_custom_domain.wealth.required_dns_updates
 }
 
+# ── Halveron Outputs ──────────────────────────────────────────
+output "halveron_wif_provider" {
+  description = "WIF_PROVIDER for halveron repo GitHub secrets"
+  value       = module.halveron.wif_provider
+}
+
+output "halveron_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for halveron repo GitHub secrets"
+  value       = module.halveron.ci_cd_sa_email
+}
+
+output "halveron_cloud_run_url" {
+  description = "Cloud Run URL for halveron"
+  value       = module.halveron.service_url
+}
+
+output "halveron_uploads_bucket" {
+  description = "GCS bucket holding halveron media uploads"
+  value       = module.halveron.uploads_bucket
+}
+
+output "halveron_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.halveron_hosting.site_url
+}
+
+output "halveron_custom_domain" {
+  description = "Custom domain for halveron"
+  value       = google_firebase_hosting_custom_domain.halveron.custom_domain
+}
+
+output "halveron_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.halveron.required_dns_updates
+}
+
 # ── Legal Outputs ───────────────────────────────────────────
 output "legal_wif_provider" {
   description = "WIF_PROVIDER for legal repo GitHub secrets"
