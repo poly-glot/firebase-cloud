@@ -15,6 +15,7 @@ locals {
     parley             = module.parley.db_app_entry
     photobank          = module.photobank_db.app_entry
     shehryar           = module.shehryar_db.app_entry
+    wealth             = module.wealth.db_app_entry
     "wordpress-sample" = module.wordpress_sample_db.app_entry
   }
 }

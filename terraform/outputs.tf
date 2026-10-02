@@ -520,6 +520,41 @@ output "parley_required_dns" {
   value       = module.apps.parley_required_dns
 }
 
+output "wealth_wif_provider" {
+  description = "WIF_PROVIDER for wealth repo GitHub secrets"
+  value       = module.apps.wealth_wif_provider
+}
+
+output "wealth_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for wealth repo GitHub secrets"
+  value       = module.apps.wealth_gcp_sa_email
+}
+
+output "wealth_cloud_run_url" {
+  description = "Cloud Run URL for wealth"
+  value       = module.apps.wealth_cloud_run_url
+}
+
+output "wealth_uploads_bucket" {
+  description = "GCS bucket holding wealth media uploads"
+  value       = module.apps.wealth_uploads_bucket
+}
+
+output "wealth_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.apps.wealth_hosting_url
+}
+
+output "wealth_custom_domain" {
+  description = "Custom domain for wealth"
+  value       = module.apps.wealth_custom_domain
+}
+
+output "wealth_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = module.apps.wealth_required_dns
+}
+
 output "legal_wif_provider" {
   description = "WIF_PROVIDER for legal repo GitHub secrets"
   value       = module.apps.legal_wif_provider
