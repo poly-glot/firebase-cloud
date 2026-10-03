@@ -624,3 +624,28 @@ output "legal_required_dns" {
   description = "DNS records required at the registrar to verify and serve the custom domain"
   value       = module.apps.legal_required_dns
 }
+
+output "flyvipcms_wif_provider" {
+  description = "WIF_PROVIDER for flyvipcms repo GitHub secrets"
+  value       = module.apps.flyvipcms_wif_provider
+}
+
+output "flyvipcms_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for flyvipcms repo GitHub secrets"
+  value       = module.apps.flyvipcms_gcp_sa_email
+}
+
+output "flyvipcms_custom_domain" {
+  description = "Custom domain for flyvipcms"
+  value       = module.apps.flyvipcms_custom_domain
+}
+
+output "flyvipcms_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = module.apps.flyvipcms_required_dns
+}
+
+output "flyvipcms_cloud_run_url" {
+  description = "Cloud Run URL for flyvipcms"
+  value       = module.apps.flyvipcms_cloud_run_url
+}

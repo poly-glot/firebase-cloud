@@ -666,3 +666,28 @@ output "cms_required_dns" {
   description = "DNS records required at the registrar to verify and serve the custom domain"
   value       = google_firebase_hosting_custom_domain.cms.required_dns_updates
 }
+
+output "flyvipcms_wif_provider" {
+  description = "WIF_PROVIDER for flyvipcms repo GitHub secrets"
+  value       = module.flyvipcms_identity.wif_provider
+}
+
+output "flyvipcms_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for flyvipcms repo GitHub secrets"
+  value       = module.flyvipcms_identity.ci_cd_sa_email
+}
+
+output "flyvipcms_custom_domain" {
+  description = "Custom domain for flyvipcms"
+  value       = google_firebase_hosting_custom_domain.flyvipcms.custom_domain
+}
+
+output "flyvipcms_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.flyvipcms.required_dns_updates
+}
+
+output "flyvipcms_cloud_run_url" {
+  description = "Cloud Run URL for flyvipcms"
+  value       = google_cloud_run_v2_service.flyvipcms.uri
+}
