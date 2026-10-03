@@ -588,6 +588,42 @@ output "halveron_required_dns" {
   value       = google_firebase_hosting_custom_domain.halveron.required_dns_updates
 }
 
+# ── Boxes Outputs ──────────────────────────────────────────
+output "boxes_wif_provider" {
+  description = "WIF_PROVIDER for boxes repo GitHub secrets"
+  value       = module.boxes.wif_provider
+}
+
+output "boxes_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for boxes repo GitHub secrets"
+  value       = module.boxes.ci_cd_sa_email
+}
+
+output "boxes_cloud_run_url" {
+  description = "Cloud Run URL for boxes"
+  value       = module.boxes.service_url
+}
+
+output "boxes_uploads_bucket" {
+  description = "GCS bucket holding boxes media uploads"
+  value       = module.boxes.uploads_bucket
+}
+
+output "boxes_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.boxes_hosting.site_url
+}
+
+output "boxes_custom_domain" {
+  description = "Custom domain for boxes"
+  value       = google_firebase_hosting_custom_domain.boxes.custom_domain
+}
+
+output "boxes_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.boxes.required_dns_updates
+}
+
 # ── Legal Outputs ───────────────────────────────────────────
 output "legal_wif_provider" {
   description = "WIF_PROVIDER for legal repo GitHub secrets"
