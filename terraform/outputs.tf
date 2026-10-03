@@ -555,6 +555,41 @@ output "wealth_required_dns" {
   value       = module.apps.wealth_required_dns
 }
 
+output "academy_wif_provider" {
+  description = "WIF_PROVIDER for academy repo GitHub secrets"
+  value       = module.apps.academy_wif_provider
+}
+
+output "academy_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for academy repo GitHub secrets"
+  value       = module.apps.academy_gcp_sa_email
+}
+
+output "academy_cloud_run_url" {
+  description = "Cloud Run URL for academy"
+  value       = module.apps.academy_cloud_run_url
+}
+
+output "academy_uploads_bucket" {
+  description = "GCS bucket holding academy media uploads"
+  value       = module.apps.academy_uploads_bucket
+}
+
+output "academy_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.apps.academy_hosting_url
+}
+
+output "academy_custom_domain" {
+  description = "Custom domain for academy"
+  value       = module.apps.academy_custom_domain
+}
+
+output "academy_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = module.apps.academy_required_dns
+}
+
 output "halveron_wif_provider" {
   description = "WIF_PROVIDER for halveron repo GitHub secrets"
   value       = module.apps.halveron_wif_provider

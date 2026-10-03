@@ -9,6 +9,7 @@
 
 locals {
   mysql_apps = {
+    academy            = module.academy.db_app_entry
     boxes              = module.boxes.db_app_entry
     careerpost         = module.careerpost_db.app_entry
     cms                = module.cms_db.app_entry

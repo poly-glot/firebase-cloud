@@ -552,6 +552,42 @@ output "wealth_required_dns" {
   value       = google_firebase_hosting_custom_domain.wealth.required_dns_updates
 }
 
+# ── Academy Outputs ──────────────────────────────────────────
+output "academy_wif_provider" {
+  description = "WIF_PROVIDER for academy repo GitHub secrets"
+  value       = module.academy.wif_provider
+}
+
+output "academy_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for academy repo GitHub secrets"
+  value       = module.academy.ci_cd_sa_email
+}
+
+output "academy_cloud_run_url" {
+  description = "Cloud Run URL for academy"
+  value       = module.academy.service_url
+}
+
+output "academy_uploads_bucket" {
+  description = "GCS bucket holding academy media uploads"
+  value       = module.academy.uploads_bucket
+}
+
+output "academy_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.academy_hosting.site_url
+}
+
+output "academy_custom_domain" {
+  description = "Custom domain for academy"
+  value       = google_firebase_hosting_custom_domain.academy.custom_domain
+}
+
+output "academy_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.academy.required_dns_updates
+}
+
 # ── Halveron Outputs ──────────────────────────────────────────
 output "halveron_wif_provider" {
   description = "WIF_PROVIDER for halveron repo GitHub secrets"
