@@ -36,7 +36,7 @@ module "c2pa_demo_hosting" {
   site_id    = "c2pa-demo"
 }
 
-# ── Secrets (shells only; values added with `gcloud secrets versions add`) ──
+# ── Secrets (shells only; add a version with `gcloud secrets versions add` before the first apply) ──
 
 locals {
   c2pa_demo_secrets = {
