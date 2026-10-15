@@ -163,6 +163,27 @@ output "amazing_landing_firestore_db" {
   value       = module.apps.amazing_landing_firestore_db
 }
 
+# ── C2PA Demo ───────────────────────────────────────────────
+output "c2pa_demo_wif_provider" {
+  description = "WIF_PROVIDER for c2pa-demo repo GitHub secrets"
+  value       = module.apps.c2pa_demo_wif_provider
+}
+
+output "c2pa_demo_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for c2pa-demo repo GitHub secrets"
+  value       = module.apps.c2pa_demo_gcp_sa_email
+}
+
+output "c2pa_demo_cloud_run_url" {
+  description = "C2PA Demo Cloud Run service URL"
+  value       = module.apps.c2pa_demo_cloud_run_url
+}
+
+output "c2pa_demo_hosting_url" {
+  description = "C2PA Demo Firebase Hosting URL"
+  value       = module.apps.c2pa_demo_hosting_url
+}
+
 # ── OpenGuessr ──────────────────────────────────────────────
 output "openguessr_wif_provider" {
   description = "WIF_PROVIDER for openguessr repo GitHub secrets"
