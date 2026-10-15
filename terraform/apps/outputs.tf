@@ -696,6 +696,27 @@ output "legal_required_dns" {
   value       = google_firebase_hosting_custom_domain.legal.required_dns_updates
 }
 
+# ── C2PA Demo Outputs ───────────────────────────────────────
+output "c2pa_demo_wif_provider" {
+  description = "WIF_PROVIDER for c2pa-demo repo GitHub secrets"
+  value       = module.c2pa_demo_identity.wif_provider
+}
+
+output "c2pa_demo_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for c2pa-demo repo GitHub secrets"
+  value       = module.c2pa_demo_identity.ci_cd_sa_email
+}
+
+output "c2pa_demo_cloud_run_url" {
+  description = "C2PA Demo Cloud Run service URL"
+  value       = module.c2pa_demo_cloud_run.service_url
+}
+
+output "c2pa_demo_hosting_url" {
+  description = "C2PA Demo Firebase Hosting URL"
+  value       = module.c2pa_demo_hosting.site_url
+}
+
 # ─────────────────────────────────────────────────────────────
 # cms Outputs
 # ─────────────────────────────────────────────────────────────
