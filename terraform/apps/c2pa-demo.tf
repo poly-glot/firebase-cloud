@@ -80,3 +80,13 @@ module "c2pa_demo_cloud_run" {
 
   depends_on = [module.c2pa_demo_identity, google_secret_manager_secret.c2pa_demo]
 }
+
+# ── Custom domain: c2pa-demo.junaid.guru ────────────────────
+resource "google_firebase_hosting_custom_domain" "c2pa_demo" {
+  provider      = google-beta
+  project       = var.project_id
+  site_id       = module.c2pa_demo_hosting.site_id
+  custom_domain = "c2pa-demo.junaid.guru"
+
+  wait_dns_verification = false
+}
