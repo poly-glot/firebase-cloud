@@ -784,3 +784,23 @@ output "flyvipcms_cloud_run_url" {
   description = "Cloud Run URL for flyvipcms"
   value       = google_cloud_run_v2_service.flyvipcms.uri
 }
+
+output "flyvipcms_net_wif_provider" {
+  description = "WIF_PROVIDER for flyvipcms_net repo GitHub secrets"
+  value       = module.flyvipcms_net_identity.wif_provider
+}
+
+output "flyvipcms_net_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for flyvipcms_net repo GitHub secrets"
+  value       = module.flyvipcms_net_identity.ci_cd_sa_email
+}
+
+output "flyvipcms_net_custom_domain" {
+  description = "Custom domain for flyvipcms-net"
+  value       = google_firebase_hosting_custom_domain.flyvipcms_net.custom_domain
+}
+
+output "flyvipcms_net_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = google_firebase_hosting_custom_domain.flyvipcms_net.required_dns_updates
+}

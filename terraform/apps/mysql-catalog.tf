@@ -14,6 +14,7 @@ locals {
     careerpost         = module.careerpost_db.app_entry
     cms                = module.cms_db.app_entry
     flyvipcms          = module.flyvipcms_db.app_entry
+    "flyvipcms-net"    = module.flyvipcms_net_db.app_entry
     halveron           = module.halveron.db_app_entry
     legal              = module.legal.db_app_entry
     parley             = module.parley.db_app_entry
