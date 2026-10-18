@@ -804,3 +804,8 @@ output "flyvipcms_net_required_dns" {
   description = "DNS records required at the registrar to verify and serve the custom domain"
   value       = google_firebase_hosting_custom_domain.flyvipcms_net.required_dns_updates
 }
+
+output "flyvipcms_net_cloud_run_url" {
+  description = "Cloud Run URL for flyvipcms-net"
+  value       = google_cloud_run_v2_service.flyvipcms_net.uri
+}

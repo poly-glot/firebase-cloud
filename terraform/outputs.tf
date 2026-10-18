@@ -760,3 +760,8 @@ output "flyvipcms_net_required_dns" {
   description = "DNS records required at the registrar to verify and serve the custom domain"
   value       = module.apps.flyvipcms_net_required_dns
 }
+
+output "flyvipcms_net_cloud_run_url" {
+  description = "Cloud Run URL for flyvipcms-net"
+  value       = module.apps.flyvipcms_net_cloud_run_url
+}
