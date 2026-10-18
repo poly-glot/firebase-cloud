@@ -740,3 +740,23 @@ output "flyvipcms_cloud_run_url" {
   description = "Cloud Run URL for flyvipcms"
   value       = module.apps.flyvipcms_cloud_run_url
 }
+
+output "flyvipcms_net_wif_provider" {
+  description = "WIF_PROVIDER for flyvipcms_net repo GitHub secrets"
+  value       = module.apps.flyvipcms_net_wif_provider
+}
+
+output "flyvipcms_net_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for flyvipcms_net repo GitHub secrets"
+  value       = module.apps.flyvipcms_net_gcp_sa_email
+}
+
+output "flyvipcms_net_custom_domain" {
+  description = "Custom domain for flyvipcms-net"
+  value       = module.apps.flyvipcms_net_custom_domain
+}
+
+output "flyvipcms_net_required_dns" {
+  description = "DNS records required at the registrar to verify and serve the custom domain"
+  value       = module.apps.flyvipcms_net_required_dns
+}
