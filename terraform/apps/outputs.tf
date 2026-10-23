@@ -809,3 +809,28 @@ output "flyvipcms_net_cloud_run_url" {
   description = "Cloud Run URL for flyvipcms-net"
   value       = google_cloud_run_v2_service.flyvipcms_net.uri
 }
+
+output "airport_drupal_wif_provider" {
+  description = "WIF_PROVIDER for airport-drupal repo GitHub secrets"
+  value       = module.airport_drupal.wif_provider
+}
+
+output "airport_drupal_gcp_sa_email" {
+  description = "GCP_SA_EMAIL for airport-drupal repo GitHub secrets"
+  value       = module.airport_drupal.ci_cd_sa_email
+}
+
+output "airport_drupal_cloud_run_url" {
+  description = "Cloud Run URL for airport-drupal"
+  value       = module.airport_drupal.service_url
+}
+
+output "airport_drupal_files_bucket" {
+  description = "GCS bucket mounted as airport-drupal public files"
+  value       = module.airport_drupal.files_bucket
+}
+
+output "airport_drupal_hosting_url" {
+  description = "Firebase Hosting URL"
+  value       = module.airport_drupal_hosting.site_url
+}
