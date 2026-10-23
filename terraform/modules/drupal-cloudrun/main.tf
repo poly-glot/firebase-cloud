@@ -248,8 +248,8 @@ resource "google_cloud_run_v2_job" "this" {
       }
 
       containers {
-        image   = var.image
-        command = each.value.command
+        image = var.image
+        args  = each.value.command
 
         resources {
           limits = {

@@ -89,12 +89,12 @@ variable "files_mount_path" {
 }
 
 variable "bootstrap_command" {
-  description = "Command run by the bootstrap job after every deploy: install or deploy, OAuth, seed"
+  description = "Arguments passed to the image entrypoint by the bootstrap job after every deploy: install or deploy, OAuth, seed"
   type        = list(string)
 }
 
 variable "cron_command" {
-  description = "Command run by the scheduled cron job"
+  description = "Arguments passed to the image entrypoint by the scheduled cron job"
   type        = list(string)
   default     = ["vendor/bin/drush", "cron", "--yes"]
 }
