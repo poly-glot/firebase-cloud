@@ -110,3 +110,15 @@ variable "extra_env" {
   type        = map(string)
   default     = {}
 }
+
+variable "warm_schedule" {
+  description = "Cloud Scheduler cron that requests warm_path on the service so an instance stays up between visitors; UTC"
+  type        = string
+  default     = "*/15 * * * *"
+}
+
+variable "warm_path" {
+  description = "Path requested by the warm ping; a full page so Twig, aggregates and caches are built"
+  type        = string
+  default     = "/"
+}

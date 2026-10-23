@@ -320,3 +320,18 @@ resource "google_cloud_scheduler_job" "cron" {
     }
   }
 }
+
+resource "google_cloud_scheduler_job" "warm" {
+  project          = var.project_id
+  region           = var.region
+  name             = "${var.app_name}-warm"
+  description      = "Keeps ${var.app_name} warm between visitors"
+  schedule         = var.warm_schedule
+  time_zone        = "UTC"
+  attempt_deadline = "60s"
+
+  http_target {
+    uri         = "${google_cloud_run_v2_service.this.uri}${var.warm_path}"
+    http_method = "GET"
+  }
+}
