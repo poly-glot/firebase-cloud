@@ -31,7 +31,7 @@ locals {
     DRUPAL_DB_SSL = "1"
   }, var.extra_env)
 
-  shared_secret_env = {
+  shared_secret_env = merge({
     DRUPAL_DB_HOST           = "db-host"
     DRUPAL_DB_USER           = local.db_secret_user
     DRUPAL_DB_PASSWORD       = local.db_secret_pass
@@ -39,7 +39,7 @@ locals {
     DRUPAL_HASH_SALT         = "${var.app_name}-hash-salt"
     DRUPAL_OAUTH_PRIVATE_KEY = "${var.app_name}-oauth-private-key"
     DRUPAL_OAUTH_PUBLIC_KEY  = "${var.app_name}-oauth-public-key"
-  }
+  }, var.extra_secret_env)
 
   bootstrap_secret_env = merge(local.shared_secret_env, {
     DRUPAL_ADMIN_PASS           = "${var.app_name}-admin-pass"

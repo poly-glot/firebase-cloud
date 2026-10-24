@@ -105,6 +105,12 @@ variable "extra_runtime_roles" {
   default     = []
 }
 
+variable "extra_secret_env" {
+  description = "Additional environment variables for the service and both jobs, as env name to Secret Manager secret id; the runtime account must already be able to read each secret"
+  type        = map(string)
+  default     = {}
+}
+
 variable "extra_env" {
   description = "Additional plain (non-secret) environment variables for the service and both jobs"
   type        = map(string)
