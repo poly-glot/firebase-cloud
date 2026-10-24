@@ -80,3 +80,8 @@ import {
   to = module.apps.google_secret_manager_secret.azadi_helidon["VITE_STRIPE_PUBLISHABLE_KEY"]
   id = "projects/firebase-cloud-491613/secrets/azadi-helidon-stripe-publishable-key"
 }
+
+import {
+  to = module.apps.google_secret_manager_secret.airport_web_revalidate
+  id = "projects/firebase-cloud-491613/secrets/airport-web-revalidate-secret"
+}

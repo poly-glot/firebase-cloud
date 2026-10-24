@@ -6,6 +6,32 @@ locals {
   airport_run_domain = "${data.google_project.airport.number}.${var.region}.run.app"
   airport_drupal_url = "https://airport-drupal-${local.airport_run_domain}"
   airport_web_url    = "https://airport-web-${local.airport_run_domain}"
+
+  airport_revalidate_readers = {
+    drupal = "serviceAccount:airport-drupal-runtime@${var.project_id}.iam.gserviceaccount.com"
+    web    = "serviceAccount:airport-web-runtime@${var.project_id}.iam.gserviceaccount.com"
+  }
+}
+
+resource "google_secret_manager_secret" "airport_web_revalidate" {
+  project   = var.project_id
+  secret_id = "airport-web-revalidate-secret"
+
+  labels = {
+    app = "airport-drupal"
+  }
+
+  replication {
+    auto {}
+  }
+}
+
+resource "google_secret_manager_secret_iam_member" "airport_web_revalidate_read" {
+  for_each  = local.airport_revalidate_readers
+  project   = var.project_id
+  secret_id = google_secret_manager_secret.airport_web_revalidate.secret_id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = each.value
 }
 
 module "airport_drupal" {
@@ -27,6 +53,12 @@ module "airport_drupal" {
     DRUPAL_PUBLIC_HOST  = "airport.junaid.guru"
     CANVAS_FRONTEND_URL = local.airport_web_url
   }
+
+  extra_secret_env = {
+    REVALIDATE_SECRET = google_secret_manager_secret.airport_web_revalidate.secret_id
+  }
+
+  depends_on = [google_secret_manager_secret_iam_member.airport_web_revalidate_read]
 }
 
 resource "google_service_account" "airport_web_runtime" {
@@ -53,6 +85,12 @@ module "airport_web" {
   env_vars = {
     CANVAS_SITE_URL = local.airport_drupal_url
   }
+
+  secret_env_vars = {
+    REVALIDATE_SECRET = google_secret_manager_secret.airport_web_revalidate.secret_id
+  }
+
+  depends_on = [google_secret_manager_secret_iam_member.airport_web_revalidate_read]
 }
 
 resource "google_cloud_scheduler_job" "airport_web_warm" {
