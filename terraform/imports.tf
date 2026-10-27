@@ -85,3 +85,33 @@ import {
   to = module.apps.google_secret_manager_secret.airport_web_revalidate
   id = "projects/firebase-cloud-491613/secrets/airport-web-revalidate-secret"
 }
+
+# ticketlist: the four SLO burn-rate alert policies were created by the app repo's
+# monitoring scripts (2026-07-23 / 2026-10-24). Their ids are referenced by the app's
+# deploy and nightly-stress snoozes, so they are adopted rather than recreated.
+import {
+  to = module.apps.google_monitoring_alert_policy.ticketlist_burn["availability_fast"]
+  id = "projects/firebase-cloud-491613/alertPolicies/9293943108776669159"
+}
+
+import {
+  to = module.apps.google_monitoring_alert_policy.ticketlist_burn["availability_slow"]
+  id = "projects/firebase-cloud-491613/alertPolicies/9293943108776665618"
+}
+
+import {
+  to = module.apps.google_monitoring_alert_policy.ticketlist_burn["journey_fast"]
+  id = "projects/firebase-cloud-491613/alertPolicies/2277637459881329925"
+}
+
+import {
+  to = module.apps.google_monitoring_alert_policy.ticketlist_burn["journey_slow"]
+  id = "projects/firebase-cloud-491613/alertPolicies/6098136169788458308"
+}
+
+# ticketlist: the nightly-stress job's runtime service account was created by the app repo's
+# provision-nightly.sh on 2026-10-26; adopt it so terraform owns it and its project roles.
+import {
+  to = module.apps.google_service_account.ticketlist_nightly
+  id = "projects/firebase-cloud-491613/serviceAccounts/ticketlist-nightly@firebase-cloud-491613.iam.gserviceaccount.com"
+}

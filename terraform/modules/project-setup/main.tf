@@ -38,6 +38,7 @@ resource "google_project_service" "apis" {
     "maps-embed-backend.googleapis.com",
     "street-view-image-backend.googleapis.com",
     "apikeys.googleapis.com",
+    "observability.googleapis.com",
   ])
 
   project            = var.project_id
