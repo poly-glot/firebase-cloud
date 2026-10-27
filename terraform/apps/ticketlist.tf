@@ -10,6 +10,11 @@
 # by id. The _Trace observability bucket (europe-west2) was created
 # once via the Observability API on 2026-10-27: it is immutable and
 # undeletable, and google_observability_bucket needs provider >= 7.
+#
+# The nightly-stress Cloud Run job and its Scheduler trigger are
+# provisioned by the app repo (scripts/stress/provision-nightly.sh);
+# this file owns the job's runtime identity and its project roles,
+# adopted on 2026-10-27 (import in terraform/imports.tf).
 # ─────────────────────────────────────────────────────────────
 
 locals {
@@ -173,4 +178,29 @@ resource "google_monitoring_alert_policy" "ticketlist_burn" {
     content   = each.value.doc
     mime_type = "text/markdown"
   }
+}
+
+# ── nightly-stress runtime identity ──────────────────────────
+# monitoring.editor: snooze the burn-rate alerts for the run window.
+# run.developer:     execute the k6 generator jobs and poll them.
+# logging.viewer:    read the k6 execution summary and the watchdog's
+#                    fleet verdicts for the run window (the job cannot
+#                    reach the agents' port 7001 from Cloud Run).
+
+resource "google_service_account" "ticketlist_nightly" {
+  project      = var.project_id
+  account_id   = "ticketlist-nightly"
+  display_name = "ticketlist nightly stress (job runtime)"
+}
+
+resource "google_project_iam_member" "ticketlist_nightly" {
+  for_each = toset([
+    "roles/logging.viewer",
+    "roles/monitoring.editor",
+    "roles/run.developer",
+  ])
+
+  project = var.project_id
+  role    = each.value
+  member  = "serviceAccount:${google_service_account.ticketlist_nightly.email}"
 }

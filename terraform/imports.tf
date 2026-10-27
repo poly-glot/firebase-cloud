@@ -108,3 +108,10 @@ import {
   to = module.apps.google_monitoring_alert_policy.ticketlist_burn["journey_slow"]
   id = "projects/firebase-cloud-491613/alertPolicies/6098136169788458308"
 }
+
+# ticketlist: the nightly-stress job's runtime service account was created by the app repo's
+# provision-nightly.sh on 2026-10-26; adopt it so terraform owns it and its project roles.
+import {
+  to = module.apps.google_service_account.ticketlist_nightly
+  id = "projects/firebase-cloud-491613/serviceAccounts/ticketlist-nightly@firebase-cloud-491613.iam.gserviceaccount.com"
+}
