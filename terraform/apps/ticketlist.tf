@@ -31,8 +31,8 @@ locals {
       total        = "metric.type=\"run.googleapis.com/request_count\" ${local.ticketlist_run}"
     }
     journey-success-999 = {
-      display_name = "buy-path journey success 99.9%"
-      goal         = 0.999
+      display_name = "buy-path journey success 99%"
+      goal         = 0.99
       good         = "metric.type=\"logging.googleapis.com/user/synthetic_journey_total\" ${local.ticketlist_metric} metric.labels.ok=\"true\""
       total        = "metric.type=\"logging.googleapis.com/user/synthetic_journey_total\" ${local.ticketlist_metric}"
     }
