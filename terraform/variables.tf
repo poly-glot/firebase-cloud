@@ -96,6 +96,11 @@ variable "c2pa_demo_signer_key" {
   description = "PKCS#8 PEM private key of the C2PA Demo claim signer certificate"
   type        = string
   sensitive   = true
+
+  validation {
+    condition     = startswith(trimspace(var.c2pa_demo_signer_key), "-----BEGIN PRIVATE KEY-----")
+    error_message = "c2pa_demo_signer_key must be a PKCS#8 PEM private key; set the C2PA_DEMO_SIGNER_KEY GitHub secret to cert/claim-signer.key from c2pa-demo."
+  }
 }
 
 # ─────────────────────────────────────────────────────────────
