@@ -79,6 +79,13 @@ variable "openguessr_google_maps_api_key" {
   sensitive   = true
 }
 
+# ── C2PA Demo ───────────────────────────────────────────────
+variable "c2pa_demo_signer_key" {
+  description = "PKCS#8 PEM private key of the C2PA Demo claim signer certificate"
+  type        = string
+  sensitive   = true
+}
+
 # ── Cross-stack: personal-cloud (OCI MySQL provisioning) ────
 variable "personal_cloud_deploy_sa" {
   description = "personal-cloud workflow's deploy SA email; granted reader on bootstrap GSM secrets so it can authenticate to OCI tfstate and read MySQL admin creds"
