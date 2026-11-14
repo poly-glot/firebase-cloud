@@ -90,6 +90,15 @@ variable "openguessr_google_maps_api_key" {
 }
 
 # ─────────────────────────────────────────────────────────────
+# C2PA Demo Secrets
+# ─────────────────────────────────────────────────────────────
+variable "c2pa_demo_signer_key" {
+  description = "PKCS#8 PEM private key of the C2PA Demo claim signer certificate"
+  type        = string
+  sensitive   = true
+}
+
+# ─────────────────────────────────────────────────────────────
 # Cross-stack: personal-cloud (OCI MySQL provisioning)
 # ─────────────────────────────────────────────────────────────
 variable "personal_cloud_deploy_sa" {

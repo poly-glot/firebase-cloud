@@ -36,9 +36,10 @@ module "c2pa_demo_hosting" {
 }
 
 # ── Secrets ─────────────────────────────────────────────────
-# C2PA_KEY_PEM is a shell: add a version with `gcloud secrets
-# versions add` before the first apply. HF_TOKEN's version comes
-# from the HF_TOKEN GitHub secret via var.hf_token.
+# Versions come from GitHub secrets through Terraform variables:
+# HF_TOKEN from HF_TOKEN (var.hf_token), C2PA_KEY_PEM from
+# C2PA_DEMO_SIGNER_KEY (var.c2pa_demo_signer_key). The key signs
+# for cert/claim-signer.pem in the app repo; rotate them together.
 
 locals {
   c2pa_demo_secrets = {
@@ -69,6 +70,11 @@ resource "google_secret_manager_secret" "c2pa_demo" {
 resource "google_secret_manager_secret_version" "c2pa_demo_hf_token" {
   secret      = google_secret_manager_secret.c2pa_demo["HF_TOKEN"].id
   secret_data = var.hf_token
+}
+
+resource "google_secret_manager_secret_version" "c2pa_demo_signer_key" {
+  secret      = google_secret_manager_secret.c2pa_demo["C2PA_KEY_PEM"].id
+  secret_data = var.c2pa_demo_signer_key
 }
 
 # Retired secrets: the LLM gateway key (replaced by ZeroGPU) and the
@@ -114,6 +120,7 @@ module "c2pa_demo_cloud_run" {
     module.c2pa_demo_identity,
     google_secret_manager_secret.c2pa_demo,
     google_secret_manager_secret_version.c2pa_demo_hf_token,
+    google_secret_manager_secret_version.c2pa_demo_signer_key,
   ]
 }
 
