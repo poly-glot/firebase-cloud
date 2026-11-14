@@ -1,8 +1,9 @@
 # ─────────────────────────────────────────────────────────────
 # C2PA Demo — Content Credentials Signing Demo
 # ─────────────────────────────────────────────────────────────
-# Node 22 HTTP server that generates images through the LLM
-# gateway and signs them with a native c2pa library. Firebase
+# Node 22 HTTP server that generates and edits images on
+# Hugging Face ZeroGPU Spaces (FLUX.1-schnell, FLUX.1 Kontext)
+# and signs them with a native c2pa library. Firebase
 # Hosting rewrites everything to Cloud Run; secrets live in
 # Secret Manager and the app pipeline only moves images.
 # ─────────────────────────────────────────────────────────────
@@ -36,19 +37,20 @@ module "c2pa_demo_hosting" {
   site_id    = "c2pa-demo"
 }
 
-# ── Secrets (shells only; add a version with `gcloud secrets versions add` before the first apply) ──
+# ── Secrets ─────────────────────────────────────────────────
+# APP_PASSWORD and C2PA_KEY_PEM are shells: add a version with
+# `gcloud secrets versions add` before the first apply. HF_TOKEN's
+# version comes from the HF_TOKEN GitHub secret via var.hf_token.
 
 locals {
   c2pa_demo_secrets = {
     APP_PASSWORD = "c2pa-demo-app-password"
-    LLM_API_KEY  = "c2pa-demo-llm-api-key"
+    HF_TOKEN     = "c2pa-demo-hf-token"
     C2PA_KEY_PEM = "c2pa-demo-signer-key"
   }
 
   c2pa_demo_env = {
-    LLM_GATEWAY_URL = "https://ai.europe-west1.storyteq.dev"
-    LLM_IMAGE_MODEL = "gemini-3.1-flash-image"
-    C2PA_CERT       = "cert/claim-signer.pem"
+    C2PA_CERT = "cert/claim-signer.pem"
   }
 }
 
@@ -57,6 +59,27 @@ resource "google_secret_manager_secret" "c2pa_demo" {
 
   project   = var.project_id
   secret_id = each.value
+  replication {
+    auto {}
+  }
+}
+
+resource "google_secret_manager_secret_version" "c2pa_demo_hf_token" {
+  secret      = google_secret_manager_secret.c2pa_demo["HF_TOKEN"].id
+  secret_data = var.hf_token
+}
+
+# The LLM gateway key is no longer mounted since the move to
+# ZeroGPU. It moves out of the for_each and is kept, not destroyed,
+# so the value stays recoverable from Secret Manager.
+moved {
+  from = google_secret_manager_secret.c2pa_demo["LLM_API_KEY"]
+  to   = google_secret_manager_secret.c2pa_demo_llm_api_key
+}
+
+resource "google_secret_manager_secret" "c2pa_demo_llm_api_key" {
+  project   = var.project_id
+  secret_id = "c2pa-demo-llm-api-key"
   replication {
     auto {}
   }
@@ -78,7 +101,11 @@ module "c2pa_demo_cloud_run" {
   env_vars              = local.c2pa_demo_env
   secret_env_vars       = local.c2pa_demo_secrets
 
-  depends_on = [module.c2pa_demo_identity, google_secret_manager_secret.c2pa_demo]
+  depends_on = [
+    module.c2pa_demo_identity,
+    google_secret_manager_secret.c2pa_demo,
+    google_secret_manager_secret_version.c2pa_demo_hf_token,
+  ]
 }
 
 # ── Custom domain: c2pa-demo.junaid.guru ────────────────────
