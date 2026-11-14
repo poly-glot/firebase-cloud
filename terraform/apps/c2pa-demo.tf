@@ -27,9 +27,7 @@ module "c2pa_demo_identity" {
 }
 
 # ── Firebase Hosting: c2pa-demo.web.app → Cloud Run ─────────
-# Hosting forwards no cookie except __session, so the app's
-# password session cookie must use that name. firebase.json in
-# the app repo rewrites ** to the service.
+# firebase.json in the app repo rewrites ** to the service.
 module "c2pa_demo_hosting" {
   source = "../modules/hosting"
 
@@ -38,15 +36,19 @@ module "c2pa_demo_hosting" {
 }
 
 # ── Secrets ─────────────────────────────────────────────────
-# APP_PASSWORD and C2PA_KEY_PEM are shells: add a version with
-# `gcloud secrets versions add` before the first apply. HF_TOKEN's
-# version comes from the HF_TOKEN GitHub secret via var.hf_token.
+# C2PA_KEY_PEM is a shell: add a version with `gcloud secrets
+# versions add` before the first apply. HF_TOKEN's version comes
+# from the HF_TOKEN GitHub secret via var.hf_token.
 
 locals {
   c2pa_demo_secrets = {
-    APP_PASSWORD = "c2pa-demo-app-password"
     HF_TOKEN     = "c2pa-demo-hf-token"
     C2PA_KEY_PEM = "c2pa-demo-signer-key"
+  }
+
+  c2pa_demo_retired_secrets = {
+    APP_PASSWORD = "c2pa-demo-app-password"
+    LLM_API_KEY  = "c2pa-demo-llm-api-key"
   }
 
   c2pa_demo_env = {
@@ -69,20 +71,27 @@ resource "google_secret_manager_secret_version" "c2pa_demo_hf_token" {
   secret_data = var.hf_token
 }
 
-# The LLM gateway key is no longer mounted since the move to
-# ZeroGPU. It moves out of the for_each and is kept, not destroyed,
-# so the value stays recoverable from Secret Manager.
-moved {
-  from = google_secret_manager_secret.c2pa_demo["LLM_API_KEY"]
-  to   = google_secret_manager_secret.c2pa_demo_llm_api_key
-}
+# Retired secrets: the LLM gateway key (replaced by ZeroGPU) and the
+# app password (the demo is open). Neither is mounted any more; they
+# are kept, not destroyed, so the values stay recoverable.
+resource "google_secret_manager_secret" "c2pa_demo_retired" {
+  for_each = local.c2pa_demo_retired_secrets
 
-resource "google_secret_manager_secret" "c2pa_demo_llm_api_key" {
   project   = var.project_id
-  secret_id = "c2pa-demo-llm-api-key"
+  secret_id = each.value
   replication {
     auto {}
   }
+}
+
+moved {
+  from = google_secret_manager_secret.c2pa_demo_llm_api_key
+  to   = google_secret_manager_secret.c2pa_demo_retired["LLM_API_KEY"]
+}
+
+moved {
+  from = google_secret_manager_secret.c2pa_demo["APP_PASSWORD"]
+  to   = google_secret_manager_secret.c2pa_demo_retired["APP_PASSWORD"]
 }
 
 # ── Cloud Run service ───────────────────────────────────────
