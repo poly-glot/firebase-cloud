@@ -120,6 +120,7 @@ module "apps" {
 
   unsplash_access_key = var.unsplash_access_key
   gemini_api_key      = var.gemini_api_key
+  hf_token            = var.hf_token
 
   depends_on = [module.project_setup]
 }

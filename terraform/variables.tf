@@ -112,3 +112,9 @@ variable "gemini_api_key" {
   type        = string
   sensitive   = true
 }
+
+variable "hf_token" {
+  description = "Hugging Face access token (shared across apps that call ZeroGPU Spaces; stored per app in Secret Manager)"
+  type        = string
+  sensitive   = true
+}
