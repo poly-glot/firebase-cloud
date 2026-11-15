@@ -2,7 +2,7 @@
 # C2PA Demo — Content Credentials Signing Demo
 # ─────────────────────────────────────────────────────────────
 # Node 22 HTTP server that generates and edits images on
-# Hugging Face ZeroGPU Spaces (FLUX.1-schnell, FLUX.1 Kontext)
+# Modal GPU endpoints (FLUX.1-schnell, FLUX.1 Kontext)
 # and signs them with a native c2pa library. Firebase
 # Hosting rewrites everything to Cloud Run; secrets live in
 # Secret Manager and the app pipeline only moves images.
@@ -37,18 +37,21 @@ module "c2pa_demo_hosting" {
 
 # ── Secrets ─────────────────────────────────────────────────
 # Versions come from GitHub secrets through Terraform variables:
-# HF_TOKEN from HF_TOKEN (var.hf_token), C2PA_KEY_PEM from
+# MODAL_KEY and MODAL_SECRET (the Modal proxy auth token) from
+# C2PA_DEMO_MODAL_KEY and C2PA_DEMO_MODAL_SECRET, C2PA_KEY_PEM from
 # C2PA_DEMO_SIGNER_KEY (var.c2pa_demo_signer_key). The key signs
 # for cert/claim-signer.pem in the app repo; rotate them together.
 
 locals {
   c2pa_demo_secrets = {
-    HF_TOKEN     = "c2pa-demo-hf-token"
+    MODAL_KEY    = "c2pa-demo-modal-key"
+    MODAL_SECRET = "c2pa-demo-modal-secret"
     C2PA_KEY_PEM = "c2pa-demo-signer-key"
   }
 
   c2pa_demo_retired_secrets = {
     APP_PASSWORD = "c2pa-demo-app-password"
+    HF_TOKEN     = "c2pa-demo-hf-token"
     LLM_API_KEY  = "c2pa-demo-llm-api-key"
   }
 
@@ -67,9 +70,14 @@ resource "google_secret_manager_secret" "c2pa_demo" {
   }
 }
 
-resource "google_secret_manager_secret_version" "c2pa_demo_hf_token" {
-  secret      = google_secret_manager_secret.c2pa_demo["HF_TOKEN"].id
-  secret_data = var.hf_token
+resource "google_secret_manager_secret_version" "c2pa_demo_modal_key" {
+  secret      = google_secret_manager_secret.c2pa_demo["MODAL_KEY"].id
+  secret_data = var.c2pa_demo_modal_key
+}
+
+resource "google_secret_manager_secret_version" "c2pa_demo_modal_secret" {
+  secret      = google_secret_manager_secret.c2pa_demo["MODAL_SECRET"].id
+  secret_data = var.c2pa_demo_modal_secret
 }
 
 resource "google_secret_manager_secret_version" "c2pa_demo_signer_key" {
@@ -77,8 +85,9 @@ resource "google_secret_manager_secret_version" "c2pa_demo_signer_key" {
   secret_data = var.c2pa_demo_signer_key
 }
 
-# Retired secrets: the LLM gateway key (replaced by ZeroGPU) and the
-# app password (the demo is open). Neither is mounted any more; they
+# Retired secrets: the LLM gateway key (replaced by ZeroGPU), the
+# Hugging Face token (ZeroGPU replaced by Modal) and the app
+# password (the demo is open). Neither is mounted any more; they
 # are kept, not destroyed, so the values stay recoverable.
 resource "google_secret_manager_secret" "c2pa_demo_retired" {
   for_each = local.c2pa_demo_retired_secrets
@@ -100,6 +109,19 @@ moved {
   to   = google_secret_manager_secret.c2pa_demo_retired["APP_PASSWORD"]
 }
 
+moved {
+  from = google_secret_manager_secret.c2pa_demo["HF_TOKEN"]
+  to   = google_secret_manager_secret.c2pa_demo_retired["HF_TOKEN"]
+}
+
+removed {
+  from = google_secret_manager_secret_version.c2pa_demo_hf_token
+
+  lifecycle {
+    destroy = false
+  }
+}
+
 # ── Cloud Run service ───────────────────────────────────────
 
 module "c2pa_demo_cloud_run" {
@@ -119,7 +141,8 @@ module "c2pa_demo_cloud_run" {
   depends_on = [
     module.c2pa_demo_identity,
     google_secret_manager_secret.c2pa_demo,
-    google_secret_manager_secret_version.c2pa_demo_hf_token,
+    google_secret_manager_secret_version.c2pa_demo_modal_key,
+    google_secret_manager_secret_version.c2pa_demo_modal_secret,
     google_secret_manager_secret_version.c2pa_demo_signer_key,
   ]
 }

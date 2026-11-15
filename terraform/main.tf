@@ -116,7 +116,9 @@ module "apps" {
 
   openguessr_google_maps_api_key = var.openguessr_google_maps_api_key
 
-  c2pa_demo_signer_key = var.c2pa_demo_signer_key
+  c2pa_demo_signer_key   = var.c2pa_demo_signer_key
+  c2pa_demo_modal_key    = var.c2pa_demo_modal_key
+  c2pa_demo_modal_secret = var.c2pa_demo_modal_secret
 
   personal_cloud_deploy_sa = var.personal_cloud_deploy_sa
 
