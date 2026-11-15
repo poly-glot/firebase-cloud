@@ -14,7 +14,9 @@
 # The nightly-stress Cloud Run job and its Scheduler trigger are
 # provisioned by the app repo (scripts/stress/provision-nightly.sh);
 # this file owns the job's runtime identity and its project roles,
-# adopted on 2026-10-27 (import in terraform/imports.tf).
+# adopted on 2026-10-27 (import in terraform/imports.tf), the two
+# alert policies on the job's outcome, and the k6 generator's
+# role-less identity, which the provisioning script requires.
 # ─────────────────────────────────────────────────────────────
 
 locals {
@@ -203,4 +205,95 @@ resource "google_project_iam_member" "ticketlist_nightly" {
   project = var.project_id
   role    = each.value
   member  = "serviceAccount:${google_service_account.ticketlist_nightly.email}"
+}
+
+# ── nightly-stress outcome ───────────────────────────────────
+# Until 2026-11-15 a failed or missed night notified nobody. Both
+# policies read Cloud Run's own execution metric, not the job's
+# result line, so a night that crashes before it logs still counts.
+# The job exits non-zero whenever any gate fails.
+#
+# "has not passed in a day" is a threshold, not a metric-absence
+# condition: absence can look back one day at most, which a job that
+# runs every 24 hours would trip daily. A threshold may evaluate 25
+# hours (alignment period + duration), so the sum over a 24-hour
+# window must stay below 1 for 30 minutes, with missing data counted
+# as a breach because the metric writes nothing between executions.
+
+locals {
+  ticketlist_nightly_executions = "metric.type=\"run.googleapis.com/job/completed_execution_count\" resource.type=\"cloud_run_job\" resource.label.\"job_name\"=\"nightly-stress\""
+  ticketlist_nightly_runbook    = "Read the night's result line in Logs Explorer: `resource.type=\"cloud_run_job\" resource.labels.job_name=\"nightly-stress\" jsonPayload.nightly=\"stress\"`. Its `failures` list names the gate. No line for the night means the job stopped before its last stage; read that execution's stdout."
+}
+
+resource "google_monitoring_alert_policy" "ticketlist_nightly_failed" {
+  project      = var.project_id
+  display_name = "ticketlist: nightly stress failed"
+  combiner     = "OR"
+  enabled      = true
+
+  conditions {
+    display_name = "a nightly-stress execution failed"
+
+    condition_threshold {
+      filter          = "${local.ticketlist_nightly_executions} metric.label.\"result\"=\"failed\""
+      comparison      = "COMPARISON_GT"
+      threshold_value = 0
+      duration        = "0s"
+
+      aggregations {
+        alignment_period   = "300s"
+        per_series_aligner = "ALIGN_SUM"
+      }
+    }
+  }
+
+  notification_channels = [local.ticketlist_alerts]
+
+  documentation {
+    content   = "A nightly-stress execution failed: a gate did not hold, or the job crashed or timed out. ${local.ticketlist_nightly_runbook}"
+    mime_type = "text/markdown"
+  }
+}
+
+resource "google_monitoring_alert_policy" "ticketlist_nightly_stale" {
+  project      = var.project_id
+  display_name = "ticketlist: nightly stress has not passed in a day"
+  combiner     = "OR"
+  enabled      = true
+
+  conditions {
+    display_name = "no succeeded nightly-stress execution in 24h30m"
+
+    condition_threshold {
+      filter                  = "${local.ticketlist_nightly_executions} metric.label.\"result\"=\"succeeded\""
+      comparison              = "COMPARISON_LT"
+      threshold_value         = 1
+      duration                = "1800s"
+      evaluation_missing_data = "EVALUATION_MISSING_DATA_ACTIVE"
+
+      aggregations {
+        alignment_period   = "86400s"
+        per_series_aligner = "ALIGN_SUM"
+      }
+    }
+  }
+
+  notification_channels = [local.ticketlist_alerts]
+
+  documentation {
+    content   = "No nightly-stress execution has succeeded for more than a day: last night failed, or Cloud Scheduler never started it (check the `nightly-stress` scheduler job in europe-west2). ${local.ticketlist_nightly_runbook}"
+    mime_type = "text/markdown"
+  }
+}
+
+# ── k6 load generator identity ───────────────────────────────
+# The k6 Cloud Run job only sends HTTP to the public edge, so its
+# runtime identity holds no roles. Without one it ran as the default
+# compute service account, which holds Editor on the project, on an
+# image pulled from Docker Hub.
+
+resource "google_service_account" "ticketlist_k6" {
+  project      = var.project_id
+  account_id   = "ticketlist-k6"
+  display_name = "ticketlist k6 load generator (holds no roles)"
 }
