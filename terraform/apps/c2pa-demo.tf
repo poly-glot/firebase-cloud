@@ -114,6 +114,14 @@ moved {
   to   = google_secret_manager_secret.c2pa_demo_retired["HF_TOKEN"]
 }
 
+removed {
+  from = google_secret_manager_secret_version.c2pa_demo_hf_token
+
+  lifecycle {
+    destroy = false
+  }
+}
+
 # ── Cloud Run service ───────────────────────────────────────
 
 module "c2pa_demo_cloud_run" {
