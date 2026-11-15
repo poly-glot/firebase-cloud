@@ -208,8 +208,14 @@ resource "google_project_iam_member" "ticketlist_nightly" {
 }
 
 # ── nightly-stress outcome ───────────────────────────────────
-# Until 2026-11-15 a failed or missed night notified nobody. Both
-# policies read Cloud Run's own execution metric, not the job's
+# Both policies are defined but paused (enabled = false), so a failed
+# or missed night still notifies nobody. Paused 2026-11-15 to stay in
+# the free tier: Cloud Monitoring bills alerting from no sooner than
+# 2027-09-01 at $0.35 a month per metric reference plus $0.50 per
+# million points returned, and a disabled policy is not charged. Set
+# both to true to be emailed.
+#
+# Both policies read Cloud Run's own execution metric, not the job's
 # result line, so a night that crashes before it logs still counts.
 # The job exits non-zero whenever any gate fails.
 #
@@ -229,7 +235,7 @@ resource "google_monitoring_alert_policy" "ticketlist_nightly_failed" {
   project      = var.project_id
   display_name = "ticketlist: nightly stress failed"
   combiner     = "OR"
-  enabled      = true
+  enabled      = false
 
   conditions {
     display_name = "a nightly-stress execution failed"
@@ -259,7 +265,7 @@ resource "google_monitoring_alert_policy" "ticketlist_nightly_stale" {
   project      = var.project_id
   display_name = "ticketlist: nightly stress has not passed in a day"
   combiner     = "OR"
-  enabled      = true
+  enabled      = false
 
   conditions {
     display_name = "no succeeded nightly-stress execution in 24h30m"
