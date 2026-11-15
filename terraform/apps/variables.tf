@@ -86,6 +86,18 @@ variable "c2pa_demo_signer_key" {
   sensitive   = true
 }
 
+variable "c2pa_demo_modal_key" {
+  description = "Modal proxy auth token ID the C2PA Demo sends to its FLUX endpoints"
+  type        = string
+  sensitive   = true
+}
+
+variable "c2pa_demo_modal_secret" {
+  description = "Modal proxy auth token secret the C2PA Demo sends to its FLUX endpoints"
+  type        = string
+  sensitive   = true
+}
+
 # ── Cross-stack: personal-cloud (OCI MySQL provisioning) ────
 variable "personal_cloud_deploy_sa" {
   description = "personal-cloud workflow's deploy SA email; granted reader on bootstrap GSM secrets so it can authenticate to OCI tfstate and read MySQL admin creds"

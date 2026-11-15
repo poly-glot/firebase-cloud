@@ -103,6 +103,18 @@ variable "c2pa_demo_signer_key" {
   }
 }
 
+variable "c2pa_demo_modal_key" {
+  description = "Modal proxy auth token ID the C2PA Demo sends to its FLUX endpoints"
+  type        = string
+  sensitive   = true
+}
+
+variable "c2pa_demo_modal_secret" {
+  description = "Modal proxy auth token secret the C2PA Demo sends to its FLUX endpoints"
+  type        = string
+  sensitive   = true
+}
+
 # ─────────────────────────────────────────────────────────────
 # Cross-stack: personal-cloud (OCI MySQL provisioning)
 # ─────────────────────────────────────────────────────────────
